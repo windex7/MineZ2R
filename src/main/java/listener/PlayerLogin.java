@@ -1,5 +1,7 @@
 package listener;
 
-public class PlayerLogin {
+import org.bukkit.event.Listener;
+
+public class PlayerLogin implements Listener {
 
 }

@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import command.Blockplace;
@@ -17,12 +16,15 @@ import command.Dev;
 import command.Login;
 import command.Logout;
 import command.Multigive;
+import command.Openinv;
 import command.Prof;
 import command.Recipe;
 import command.Stats;
 import command.Tester;
+import listener.PlayerTeleport;
 import net.minecraft.server.v1_9_R2.Item;
 import util.NBTUtil;
+import util.RecipeUtil;
 
 public class MineZ2R extends JavaPlugin implements Listener{
 	private static MineZ2R instance;
@@ -63,12 +65,12 @@ public class MineZ2R extends JavaPlugin implements Listener{
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not create config files!");
 		}
 		// --remove vanilla recipes--
-		//RecipeUtility.removeVanillaRecipe();
+		RecipeUtil.removeVanillaRecipe();
 
 		// --add original recipes--
 		ItemStack book = new ItemStack(Material.BOOK, 1);
 		book = NBTUtil.writeItemStringTag(book, "craftable", "true");
-		ShapelessRecipe bookfree = new ShapelessRecipe(book);
+		// ShapelessRecipe bookfree = new ShapelessRecipe(book);
 		ShapedRecipe booktest = new ShapedRecipe(book);
 		booktest.shape(" bc","bc ","c b");
 		booktest.setIngredient('b', Material.BONE);
@@ -100,7 +102,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 
 		// --register events and commands--
-		// Bukkit.getPluginManager().registerEvents(new Metadata(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
 		getCommand("login").setExecutor(new Login());
 		getCommand("logout").setExecutor(new Logout());
 		getCommand("recipe").setExecutor(new Recipe());
@@ -110,6 +112,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		getCommand("dev").setExecutor(new Dev());
 		getCommand("blockplace").setExecutor(new Blockplace());
 		getCommand("multigive").setExecutor(new Multigive());
+		getCommand("openinv").setExecutor(new Openinv());
 
 		// --enabled msg--
 		getLogger().info("Successfully enabled MZ2R plugin.");

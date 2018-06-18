@@ -45,8 +45,8 @@ public class Login extends YamlConfiguration implements CommandExecutor {
 		if (playerdata.getString("inventory") != null) {
 			ItemStack[] items = Base64Util.itemFromStringList(playerdata.getString("inventory"));
 			ItemStack[] permitems = VerifyItemUtil.checkItemStack(items, "temporary");
-			ItemStack[] invitems = VerifyItemUtil.checkItemStack(permitems, "craftable");
-			player.getInventory().setContents(invitems);
+			ItemStack[] validitems = VerifyItemUtil.checkItemStack(permitems, "validitem");
+			player.getInventory().setContents(validitems);
 		}
 		else {
 			// --spawn with "spawnkit"--

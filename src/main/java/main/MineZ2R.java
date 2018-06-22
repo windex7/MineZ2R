@@ -21,7 +21,10 @@ import command.Prof;
 import command.Recipe;
 import command.Stats;
 import command.Tester;
+import customrecipe.shapeless.CustomShapelessRecipe;
+import listener.PlayerLogin;
 import listener.PlayerTeleport;
+import listener.Recipes;
 import net.minecraft.server.v1_9_R2.Item;
 import util.NBTUtil;
 import util.RecipeUtil;
@@ -38,6 +41,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 	@Override
 	public void onDisable() {
+		new Recipes().onDisable();
 	}
 
 	@Override
@@ -100,9 +104,15 @@ public class MineZ2R extends JavaPlugin implements Listener{
 			e.printStackTrace();
 		}
 
+		CustomShapelessRecipe rec1 = new CustomShapelessRecipe(new ItemStack(Material.ACACIA_DOOR));
+		rec1.addIngredient(new ItemStack(Material.ACACIA_FENCE), 2);
+		rec1.register();
+
 
 		// --register events and commands--
 		Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
+		Bukkit.getPluginManager().registerEvents(new Recipes(), this);
 		getCommand("login").setExecutor(new Login());
 		getCommand("logout").setExecutor(new Logout());
 		getCommand("recipe").setExecutor(new Recipe());

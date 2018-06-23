@@ -1,10 +1,11 @@
 package customrecipe.shapeless;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -14,7 +15,7 @@ import listener.Recipes;
 import main.MineZ2R;
 
 public class CustomShapelessRecipe {
-	ArrayList<Pair<ItemStack, Integer>> items = new ArrayList<Pair<ItemStack, Integer>>();
+	HashMap<ItemStack, Integer> items = new HashMap<ItemStack, Integer>();
 	ShapelessRecipe registerer = new ShapelessRecipe(new ItemStack(Material.ANVIL));
 	ItemStack result;
 
@@ -24,30 +25,22 @@ public class CustomShapelessRecipe {
 
 	public ArrayList<String> getId() {
 		ArrayList<String> array = new ArrayList<String>();
-		for (Pair<ItemStack, Integer> pair : items) {
-			array.add(pair.getLeft().getType().toString() + pair.getLeft().getItemMeta().getDisplayName() + pair.getRight());
+		for (Entry<ItemStack, Integer> entry : items.entrySet()) {
+			array.add(entry.getKey().getType().toString() + entry.getKey().getItemMeta().getDisplayName() + entry.getValue());
 		}
 		return array;
 	}
 
 	public void addIngredient(ItemStack itemstack) {
-		boolean contains = false;
-		int pairs = -1;
-
-		for (Pair<ItemStack, Integer> pair : items) {
-			if (pair.getLeft().equals(itemstack)) {
-				contains = true;
-				pairs = items.indexOf(pair);
+		for (Entry<ItemStack, Integer> entry : items.entrySet()) {
+			if (entry.getKey().equals(itemstack)) {
+				registerer.addIngredient(itemstack.getData());
+				entry.setValue(entry.getValue() + 1);
+				return;
 			}
 		}
-
-		if (contains) {
-			registerer.addIngredient(itemstack.getData());
-			items.get(pairs).setValue(items.get(pairs).getRight() + 1);
-		} else {
-			registerer.addIngredient(itemstack.getData());
-			items.add(Pair.of(itemstack, 1));
-		}
+		registerer.addIngredient(itemstack.getData());
+		items.put(itemstack, 1);
 	}
 
 	public void addIngredient(ItemStack itemstack, int i) {

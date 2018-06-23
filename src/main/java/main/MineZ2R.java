@@ -22,6 +22,7 @@ import command.Recipe;
 import command.Stats;
 import command.Tester;
 import customrecipe.shapeless.CustomShapelessRecipe;
+import customrecipe.shapeless.RepairSword;
 import listener.PlayerLogin;
 import listener.PlayerTeleport;
 import listener.Recipes;
@@ -107,6 +108,8 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		CustomShapelessRecipe rec1 = new CustomShapelessRecipe(new ItemStack(Material.ACACIA_DOOR));
 		rec1.addIngredient(new ItemStack(Material.ACACIA_FENCE), 2);
 		rec1.register();
+
+		new RepairSword();
 
 
 		// --register events and commands--

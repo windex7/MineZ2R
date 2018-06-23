@@ -38,3 +38,7 @@ commands:
     description: give multiple itemstacks.
     usage: /multigive player,itemname,number,datavalue,{datatags};player,itemname,...
     default: true
+  openinv:
+    description: open player's inv.
+    usage: /openinv player
+    default: true

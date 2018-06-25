@@ -104,12 +104,13 @@ public class MineZ2R extends JavaPlugin implements Listener{
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
-		CustomShapelessRecipe rec1 = new CustomShapelessRecipe(new ItemStack(Material.ACACIA_DOOR));
-		rec1.addIngredient(new ItemStack(Material.ACACIA_FENCE), 2);
+		new RepairSword();
+		CustomShapelessRecipe rec1 = new CustomShapelessRecipe(new ItemStack(Material.GOLDEN_APPLE, 1, (short)1));
+		rec1.addIngredient(new ItemStack(Material.APPLE));
+		rec1.addIngredient(new ItemStack(Material.APPLE));
 		rec1.register();
 
-		new RepairSword();
+
 
 
 		// --register events and commands--

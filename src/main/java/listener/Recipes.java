@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import customrecipe.shapeless.CustomShapelessRecipe;
 
 public class Recipes implements Listener {
-	ArrayList<CustomShapelessRecipe> shapeless = new ArrayList<CustomShapelessRecipe>();
+	static ArrayList<CustomShapelessRecipe> shapeless = new ArrayList<CustomShapelessRecipe>();
 
 	public void addShapeless(CustomShapelessRecipe recipe) {
 		for (CustomShapelessRecipe r : shapeless) {

@@ -2,11 +2,9 @@ package custommob;
 
 import java.util.Set;
 
+import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+
 import net.minecraft.server.v1_9_R2.EntityHuman;
-
-//import org.bukkit.World;
-//import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
-
 import net.minecraft.server.v1_9_R2.EntityZombie;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.PathfinderGoalFloat;
@@ -15,17 +13,16 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalLookAtPlayer;
 import net.minecraft.server.v1_9_R2.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_9_R2.PathfinderGoalMoveThroughVillage;
 import net.minecraft.server.v1_9_R2.PathfinderGoalMoveTowardsRestriction;
+import net.minecraft.server.v1_9_R2.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_9_R2.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_9_R2.PathfinderGoalRandomStroll;
 import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
-import net.minecraft.server.v1_9_R2.World;
 import util.PrivateField;
 
 public class GeneralZombie extends EntityZombie {
-	@SuppressWarnings("rawtypes")
-	public GeneralZombie(World world) {
-		//super(((CraftWorld)world).getHandle());;
-		super(world);
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public GeneralZombie(org.bukkit.World world) {
+		super(((CraftWorld)world).getHandle());
 
 		Set goalB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, goalSelector); goalB.clear();
 		Set goalC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, goalSelector); goalC.clear();
@@ -41,6 +38,7 @@ public class GeneralZombie extends EntityZombie {
 		this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
 
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
+		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.2D);
 	}
 }

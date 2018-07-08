@@ -38,7 +38,7 @@ public class GeneralZombie extends EntityZombie {
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
 		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
 
-		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.3D);
+		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35D);
 		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(32.0D);
 	}
 }

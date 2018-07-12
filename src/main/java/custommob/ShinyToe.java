@@ -13,6 +13,9 @@ import net.minecraft.server.v1_9_R2.Items;
 public class ShinyToe extends GeneralZombie {
 	public ShinyToe(World world) {
 		super(world);
+		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_HOE));
+	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Blocks.PUMPKIN));
+	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
 	}
 
 	@Override
@@ -26,8 +29,8 @@ public class ShinyToe extends GeneralZombie {
 	    // Calling the super method FIRST, so in case it changes the equipment, our equipment overrides it.
 	    gde = super.prepare(dds, gde);
 	    // We'll set the main hand to a bow and head to a pumpkin now!
-	    this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_HOE));
-	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Blocks.PUMPKIN));
+	    //this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_HOE));
+	    //this.setSlot(EnumItemSlot.HEAD, new ItemStack(Blocks.PUMPKIN));
 	    // Last, returning the GroupDataEntity called gde.
 	    return gde;
 	}

@@ -10,7 +10,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import custommob.GeneralZombie;
 import custommob.ShinyToe;
 import main.MineZ2R;
 import util.EntityRegistry;
@@ -24,7 +23,7 @@ public class Tester implements CommandExecutor{
 		String playeruuid = player.getUniqueId().toString();
 		File playerconfig = new File(plugin.getDataFolder(), playeruuid + ".yml");
 		FileConfiguration playerdata = YamlConfiguration.loadConfiguration(playerconfig);
-		EntityRegistry.spawnEntity(new GeneralZombie(player.getWorld()), player.getLocation());
+		// EntityRegistry.spawnEntity(new GeneralZombie(player.getWorld()), player.getLocation());
 		EntityRegistry.spawnEntity(new ShinyToe(player.getWorld()), player.getLocation());
 		return true;
 	}

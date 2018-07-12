@@ -2,7 +2,6 @@ package custommob;
 
 import org.bukkit.World;
 
-import net.minecraft.server.v1_9_R2.Blocks;
 import net.minecraft.server.v1_9_R2.DifficultyDamageScaler;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
@@ -13,8 +12,11 @@ import net.minecraft.server.v1_9_R2.Items;
 public class ShinyToe extends GeneralZombie {
 	public ShinyToe(World world) {
 		super(world);
-		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_HOE));
-	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Blocks.PUMPKIN));
+		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_SWORD));
+	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));
+	    this.setSlot(EnumItemSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
+	    this.setSlot(EnumItemSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
+	    this.setSlot(EnumItemSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
 	}
 

@@ -23,6 +23,14 @@ public class CustomShapelessRecipe {
 		result = itemstack;
 	}
 
+	public void setResult(ItemStack itemstack) {
+		result = itemstack;
+	}
+
+	public void setDurability(short durability) {
+		result.setDurability(durability);
+	}
+
 	public ArrayList<String> getId() {
 		ArrayList<String> array = new ArrayList<String>();
 		for (Entry<ItemStack, Integer> entry : items.entrySet()) {

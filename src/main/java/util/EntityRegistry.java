@@ -11,7 +11,8 @@ import net.minecraft.server.v1_9_R2.EntityTypes;
 @SuppressWarnings("rawtypes")
 public enum EntityRegistry {
 	MZ_ZOMBIE("Zombie", 54, custommob.GeneralZombie.class),
-	MZ_SHINYTOE("Zombie", 54, custommob.ShinyToe.class);
+	MZ_SHINYTOE("Zombie", 54, custommob.ShinyToe.class),
+	MZ_IRONZOMBIE("Zombie", 54, custommob.IronZombie.class);
 
 	private EntityRegistry(String name, int id, Class<? extends Entity> custom) {
 		addToMaps(custom, name, id);

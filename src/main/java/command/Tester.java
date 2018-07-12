@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import custommob.IronZombie;
 import custommob.ShinyToe;
 import main.MineZ2R;
 import util.EntityRegistry;
@@ -25,6 +26,7 @@ public class Tester implements CommandExecutor{
 		FileConfiguration playerdata = YamlConfiguration.loadConfiguration(playerconfig);
 		// EntityRegistry.spawnEntity(new GeneralZombie(player.getWorld()), player.getLocation());
 		EntityRegistry.spawnEntity(new ShinyToe(player.getWorld()), player.getLocation());
+		EntityRegistry.spawnEntity(new IronZombie(player.getWorld()), player.getLocation());
 		return true;
 	}
 }

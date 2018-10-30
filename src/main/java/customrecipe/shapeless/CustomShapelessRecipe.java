@@ -2,9 +2,8 @@ package customrecipe.shapeless;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +14,7 @@ import listener.Recipes;
 import main.MineZ2R;
 
 public class CustomShapelessRecipe {
-	HashMap<ItemStack, Integer> items = new HashMap<ItemStack, Integer>();
+	Map<ItemStack, Integer> items = new HashMap<ItemStack, Integer>();
 	ShapelessRecipe registerer = new ShapelessRecipe(new ItemStack(Material.ANVIL));
 	ItemStack result;
 
@@ -35,6 +34,14 @@ public class CustomShapelessRecipe {
 		ArrayList<String> array = new ArrayList<String>();
 		for (Entry<ItemStack, Integer> entry : items.entrySet()) {
 			array.add(entry.getKey().getType().toString() + entry.getKey().getItemMeta().getDisplayName() + entry.getValue());
+		}
+		return array;
+	}
+
+	public ArrayList<ItemStack> getIs() {
+		ArrayList<ItemStack> array = new ArrayList<ItemStack>();
+		for (Entry<ItemStack, Integer> entry : items.entrySet()) {
+			array.add(entry.getKey());
 		}
 		return array;
 	}
@@ -68,10 +75,13 @@ public class CustomShapelessRecipe {
 	}
 
 	public boolean match(CustomShapelessRecipe recipe) {
+		/*
 		Set<String> set1 = new HashSet<String>();
 		set1.addAll(recipe.getId());
 		Set<String> set2 = new HashSet<String>();
 		set2.addAll(getId());
 		return set1.equals(set2);
+		*/
+		return this.getIs().equals(recipe.getIs());
 	}
 }

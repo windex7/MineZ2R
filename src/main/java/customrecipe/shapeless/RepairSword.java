@@ -11,7 +11,7 @@ public class RepairSword {
 			ItemStack ingredient = new ItemStack(Material.WOOD_SWORD);
 			ingredient.setDurability(i);
 			short newdura = 0;
-			if (i - repairdura > 0) newdura = (short)(i - repairdura);
+			if (i > repairdura) newdura = (short)(i - repairdura);
 			ItemStack result = new ItemStack(Material.WOOD_SWORD);
 			result.setDurability(newdura);
 			CustomShapelessRecipe r = new CustomShapelessRecipe(result);
@@ -19,6 +19,5 @@ public class RepairSword {
 			r.addIngredient(ingredient);
 			r.register();
 		}
-
 	}
 }

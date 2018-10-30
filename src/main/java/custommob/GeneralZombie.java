@@ -23,10 +23,10 @@ public class GeneralZombie extends EntityZombie {
 	public GeneralZombie(org.bukkit.World world) {
 		super(((CraftWorld)world).getHandle());
 
-		Set goalB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, goalSelector); goalB.clear();
-		Set goalC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, goalSelector); goalC.clear();
-		Set targetB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, targetSelector); targetB.clear();
-		Set targetC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, targetSelector); targetC.clear();
+		Set goalB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, this.goalSelector); goalB.clear();
+		Set goalC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, this.goalSelector); goalC.clear();
+		Set targetB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, this.targetSelector); targetB.clear();
+		Set targetC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, this.targetSelector); targetC.clear();
 
 		this.goalSelector.a(0, new PathfinderGoalFloat(this));
 		this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));

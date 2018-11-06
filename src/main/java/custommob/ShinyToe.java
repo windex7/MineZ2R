@@ -1,23 +1,50 @@
 package custommob;
 
+import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import net.minecraft.server.v1_9_R2.DifficultyDamageScaler;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.GroupDataEntity;
-import net.minecraft.server.v1_9_R2.ItemStack;
-import net.minecraft.server.v1_9_R2.Items;
-
+import util.NMSUtil;
 public class ShinyToe extends GeneralZombie {
+
 	public ShinyToe(World world) {
 		super(world);
-		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_SWORD));
-	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));
-	    this.setSlot(EnumItemSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
-	    this.setSlot(EnumItemSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
-	    this.setSlot(EnumItemSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
+		ItemStack mainhandis = new ItemStack(Material.WOOD_SWORD);
+		mainhandis.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+		ItemStack headis = new ItemStack(Material.LEATHER_HELMET);
+		headis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		LeatherArmorMeta headmeta = (LeatherArmorMeta) headis.getItemMeta();
+		headmeta.setColor(Color.YELLOW);
+		headis.setItemMeta(headmeta);
+		ItemStack chestis = new ItemStack(Material.LEATHER_CHESTPLATE);
+		chestis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		LeatherArmorMeta chestmeta = (LeatherArmorMeta) headis.getItemMeta();
+		chestmeta.setColor(Color.BLACK);
+		chestis.setItemMeta(chestmeta);
+		ItemStack legis = new ItemStack(Material.LEATHER_LEGGINGS);
+		legis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		LeatherArmorMeta legmeta = (LeatherArmorMeta) headis.getItemMeta();
+		legmeta.setColor(Color.BLACK);
+		legis.setItemMeta(legmeta);
+		ItemStack bootsis = new ItemStack(Material.LEATHER_BOOTS);
+		bootsis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		LeatherArmorMeta bootsmeta = (LeatherArmorMeta) headis.getItemMeta();
+		bootsmeta.setColor(Color.PURPLE);
+		bootsis.setItemMeta(bootsmeta);
+		this.setSlot(EnumItemSlot.MAINHAND, NMSUtil.convIStoNMS(mainhandis));
+	    this.setSlot(EnumItemSlot.HEAD, NMSUtil.convIStoNMS(headis));
+	    this.setSlot(EnumItemSlot.CHEST, NMSUtil.convIStoNMS(chestis));
+	    this.setSlot(EnumItemSlot.LEGS, NMSUtil.convIStoNMS(legis));
+	    this.setSlot(EnumItemSlot.FEET, NMSUtil.convIStoNMS(bootsis));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4D);
 	}
 
 	@Override

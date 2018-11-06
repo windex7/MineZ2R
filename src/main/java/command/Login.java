@@ -16,7 +16,7 @@ import org.bukkit.plugin.Plugin;
 
 import main.MineZ2R;
 import util.Base64Util;
-import util.VerifyItemUtil;
+import util.VerifyUtil;
 
 public class Login extends YamlConfiguration implements CommandExecutor {
 	@Override
@@ -44,8 +44,8 @@ public class Login extends YamlConfiguration implements CommandExecutor {
 		}
 		if (playerdata.getString("inventory") != null) {
 			ItemStack[] items = Base64Util.itemFromStringList(playerdata.getString("inventory"));
-			ItemStack[] permitems = VerifyItemUtil.checkItemStack(items, "temporary");
-			ItemStack[] validitems = VerifyItemUtil.checkItemStack(permitems, "validitem");
+			ItemStack[] permitems = VerifyUtil.checkItemStack(items, "temporary");
+			ItemStack[] validitems = VerifyUtil.checkItemStack(permitems, "validitem");
 			player.getInventory().setContents(validitems);
 		}
 		else {

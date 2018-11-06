@@ -7,10 +7,11 @@ import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.ItemStack;
 import net.minecraft.server.v1_9_R2.Items;
 
-public class IronZombie extends GeneralZombie{
-	public IronZombie(World world) {
+
+public class Forsaken extends GeneralZombie {
+	public Forsaken(World world) {
 		super(world);
-		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_SWORD));
 	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 	    this.setSlot(EnumItemSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
 	    this.setSlot(EnumItemSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));

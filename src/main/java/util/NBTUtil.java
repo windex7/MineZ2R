@@ -1,5 +1,7 @@
 package util;
 
+import java.lang.reflect.Method;
+
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_9_R2.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
@@ -84,6 +86,29 @@ public class NBTUtil {
 		}
 	}
 
+	public static void writeEntityStringTag(Entity entity, String key, String value) {
+		CraftEntity craft = ((CraftEntity) entity);
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		NBTTagCompound nbttag = new NBTTagCompound();
+		nmsEntity.c(nbttag);
+		nbttag.setString(key, value);
+		Class<?> entityClass = nmsEntity.getClass();
+	    Method[] methods = entityClass.getMethods();
+	    for (Method method : methods) {
+	        if ((method.getName() == "a")
+	                && (method.getParameterTypes().length == 1)
+	                && (method.getParameterTypes()[0] == NBTTagCompound.class)) {
+	            try {
+	                method.setAccessible(true);
+	                method.invoke(nmsEntity, nbttag);
+	            } catch (Exception ex) {
+	                ex.printStackTrace();
+	            }
+	        }
+	    }
+	    craft.setHandle(nmsEntity);
+	}
+
 	public static void writeArrowIntTag(Entity entity, String key, int value) {
 		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
 		NBTTagCompound nbttag = new NBTTagCompound();
@@ -100,5 +125,15 @@ public class NBTUtil {
 		nbttag.setInt(key, value);
 		EntityItem nbtentity = (EntityItem) nmsEntity;
 		nbtentity.a(nbttag);
+	}
+
+	public static String readEntityStringTag(Entity entity, String key) {
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		NBTTagCompound nbttag = new NBTTagCompound();
+		nmsEntity.c(nbttag);
+		if (nbttag != null) {
+			if (nbttag.hasKey(key)) return nbttag.getString(key);
+		}
+		return null;
 	}
 }

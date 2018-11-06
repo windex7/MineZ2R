@@ -23,8 +23,10 @@ import command.Stats;
 import command.Tester;
 import customrecipe.shapeless.CustomShapelessRecipe;
 import customrecipe.shapeless.RepairSword;
+import listener.PlayerInteract;
 import listener.PlayerLogin;
 import listener.PlayerTeleport;
+import listener.ProjectileHit;
 import listener.Recipes;
 import net.minecraft.server.v1_9_R2.Item;
 import util.NBTUtil;
@@ -114,6 +116,8 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 
 		// --register events and commands--
+		Bukkit.getPluginManager().registerEvents(new ProjectileHit(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
 		Bukkit.getPluginManager().registerEvents(new Recipes(), this);

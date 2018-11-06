@@ -2,9 +2,10 @@ package util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 
-public class VerifyItemUtil {
+public class VerifyUtil {
 	public static ItemStack[] checkItemStack(ItemStack[] itemstack, String key) {
 		ItemStack[] invitems = new ItemStack[itemstack.length];
 		int index = 0;
@@ -40,5 +41,39 @@ public class VerifyItemUtil {
 		index++;
 		}
 		return invitems;
+	}
+
+	private static String istypekey = "customitem";
+
+	public static ItemStack setItemClass(ItemStack is, String tag) {
+		ItemStack result = NBTUtil.writeItemStringTag(is, istypekey, tag);
+		return result;
+	}
+
+	public static <T> Class<T> getItemClass(ItemStack is) {
+		String tag = NBTUtil.readItemStringTag(is, istypekey);
+		return getClassFromStr(tag);
+	}
+
+	public static void setEntityClass(Entity en, String tag) {
+		NBTUtil.writeEntityStringTag(en, istypekey, tag);
+		return;
+	}
+
+	public static <T> Class<T> getEntityClass(Entity en) {
+		String tag = NBTUtil.readEntityStringTag(en, istypekey);
+		return getClassFromStr(tag);
+	}
+
+	public static <T> Class<T> getClassFromStr(String tag) {
+		if (tag != null && !tag.isEmpty()) {
+			try {
+				return ReflectionUtil.getItemClass(tag);
+			} catch (ClassNotFoundException e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 }

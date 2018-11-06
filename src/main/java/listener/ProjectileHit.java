@@ -24,7 +24,7 @@ public class ProjectileHit implements Listener {
 			Class<Object> clazz = VerifyUtil.getEntityClass(proj);
 			if (clazz == null) return;
 			try {
-				Method method = clazz.getMethod(onhitmethodName);
+				Method method = clazz.getMethod(onhitmethodName, Projectile.class);
 				method.invoke(clazz, proj);
 			} catch (NoSuchMethodException e) {
 				// TODO 自動生成された catch ブロック

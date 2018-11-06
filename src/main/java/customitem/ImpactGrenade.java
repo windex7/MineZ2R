@@ -16,7 +16,7 @@ public class ImpactGrenade {
 	private static float power = 2.5F;
 
 	public static void onClick(PlayerInteractEvent event) {
-		String igkey = "impactgrenade";
+		String igkey = "ImpactGrenade";
 		int grect = 60; //tick
 		Player player = event.getPlayer();
 		ItemStack is = event.getItem();

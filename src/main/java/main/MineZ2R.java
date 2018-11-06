@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import command.Blockplace;
 import command.Dev;
@@ -28,9 +29,13 @@ import listener.PlayerLogin;
 import listener.PlayerTeleport;
 import listener.ProjectileHit;
 import listener.Recipes;
+import listener.SwapOffhand;
 import net.minecraft.server.v1_9_R2.Item;
+import util.DamageUtil;
 import util.NBTUtil;
+import util.OffhandUtil;
 import util.RecipeUtil;
+import util.TimingUtil;
 
 public class MineZ2R extends JavaPlugin implements Listener{
 	private static MineZ2R instance;
@@ -121,6 +126,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
 		Bukkit.getPluginManager().registerEvents(new Recipes(), this);
+		Bukkit.getPluginManager().registerEvents(new SwapOffhand(), this);
 		getCommand("login").setExecutor(new Login());
 		getCommand("logout").setExecutor(new Logout());
 		getCommand("recipe").setExecutor(new Recipe());
@@ -131,6 +137,17 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		getCommand("blockplace").setExecutor(new Blockplace());
 		getCommand("multigive").setExecutor(new Multigive());
 		getCommand("openinv").setExecutor(new Openinv());
+
+
+		TimingUtil.resetTick();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				TimingUtil.tick();
+				DamageUtil.removeDamageTickAllEntity();
+				OffhandUtil.checkAllOffhand();
+			}
+		}.runTaskTimer(instance, 1, 1);
 
 		// --enabled msg--
 		getLogger().info("Successfully enabled MZ2R plugin.");

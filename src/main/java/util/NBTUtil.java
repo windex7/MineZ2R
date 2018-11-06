@@ -88,7 +88,7 @@ public class NBTUtil {
 
 	public static void writeEntityStringTag(Entity entity, String key, String value) {
 		CraftEntity craft = ((CraftEntity) entity);
-		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = craft.getHandle();
 		NBTTagCompound nbttag = new NBTTagCompound();
 		nmsEntity.c(nbttag);
 		nbttag.setString(key, value);
@@ -130,6 +130,7 @@ public class NBTUtil {
 	public static String readEntityStringTag(Entity entity, String key) {
 		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
 		NBTTagCompound nbttag = new NBTTagCompound();
+
 		nmsEntity.c(nbttag);
 		if (nbttag != null) {
 			if (nbttag.hasKey(key)) return nbttag.getString(key);

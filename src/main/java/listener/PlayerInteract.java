@@ -39,7 +39,7 @@ public class PlayerInteract implements Listener {
 		Class<Object> clazz = VerifyUtil.getItemClass(is);
 		if (clazz == null) return;
 		try {
-			Method method = clazz.getMethod(onclickmethodName);
+			Method method = clazz.getMethod(onclickmethodName, PlayerInteractEvent.class);
 			method.invoke(clazz, event);
 		} catch (NoSuchMethodException e) {
 			// TODO 自動生成された catch ブロック

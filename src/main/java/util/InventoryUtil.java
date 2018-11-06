@@ -7,7 +7,8 @@ import org.bukkit.inventory.ItemStack;
 public class InventoryUtil {
 	public static boolean removeIS(Player player, ItemStack is, int qty) {
 		for (int i = 0; i < qty; i++) {
-			boolean result = removeOneIS(player, searchInv(player, is));
+			// boolean result = removeOneIS(player, searchInv(player, is));
+			boolean result = removeOneIS(player, is);
 			if (!result) return false;
 		}
 		return true;

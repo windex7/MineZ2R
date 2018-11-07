@@ -3,7 +3,6 @@ package util;
 import java.util.HashMap;
 import java.util.Map;
 
-import customitem.GeneralItem;
 import customitem.ImpactGrenade;
 
 public class ReflectionUtil {
@@ -21,7 +20,7 @@ public class ReflectionUtil {
 		registerPrimitiveType("double", double.class);
 		registerPrimitiveType("char", char.class);
 
-		registerItemClass("impactgrenade", ImpactGrenade.class);
+		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
 	}
 
 	private ReflectionUtil() {
@@ -51,6 +50,7 @@ public class ReflectionUtil {
 			return (Class<T>) ITEM_CLASS_MAP.get(tagName);
 		}
 
-		return (Class<T>) GeneralItem.class;
+		// return (Class<T>) GeneralItem.class;
+		return null;
 	}
 }

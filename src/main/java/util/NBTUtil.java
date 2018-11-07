@@ -109,11 +109,46 @@ public class NBTUtil {
 	    craft.setHandle(nmsEntity);
 	}
 
+	public static String readEntityStringTag(Entity entity, String key) {
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		NBTTagCompound nbttag = new NBTTagCompound();
+
+		nmsEntity.c(nbttag);
+		if (nbttag != null) {
+			if (nbttag.hasKey(key)) {
+				return nbttag.getString(key);
+			}
+		}
+		return null;
+	}
+
+	public static int readEntityIntTag(Entity entity, String key) {
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		NBTTagCompound nbttag = new NBTTagCompound();
+
+		nmsEntity.c(nbttag);
+		if (nbttag != null) {
+			if (nbttag.hasKey(key)) {
+				return nbttag.getInt(key);
+			}
+		}
+		return -1;
+	}
+
 	public static void writeArrowIntTag(Entity entity, String key, int value) {
 		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
 		NBTTagCompound nbttag = new NBTTagCompound();
 		nmsEntity.c(nbttag);
 		nbttag.setInt(key, value);
+		EntityArrow nbtentity = (EntityArrow) nmsEntity;
+		nbtentity.a(nbttag);
+	}
+
+	public static void writeArrowStringTag(Entity entity, String key, String value) {
+		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
+		NBTTagCompound nbttag = new NBTTagCompound();
+		nmsEntity.c(nbttag);
+		nbttag.setString(key, value);
 		EntityArrow nbtentity = (EntityArrow) nmsEntity;
 		nbtentity.a(nbttag);
 	}
@@ -127,14 +162,4 @@ public class NBTUtil {
 		nbtentity.a(nbttag);
 	}
 
-	public static String readEntityStringTag(Entity entity, String key) {
-		net.minecraft.server.v1_9_R2.Entity nmsEntity = ((CraftEntity) entity).getHandle();
-		NBTTagCompound nbttag = new NBTTagCompound();
-
-		nmsEntity.c(nbttag);
-		if (nbttag != null) {
-			if (nbttag.hasKey(key)) return nbttag.getString(key);
-		}
-		return null;
-	}
 }

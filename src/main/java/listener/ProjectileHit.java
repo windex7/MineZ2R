@@ -16,7 +16,7 @@ public class ProjectileHit implements Listener {
 	private static String onhitmethodName = "onHit";
 
 	@EventHandler
-	public void onProjectileHit (ProjectileHitEvent event) {
+	public void onProjectileHit(ProjectileHitEvent event) {
 		Projectile proj = event.getEntity();
 		EntityType type = proj.getType();
 		switch (type) {
@@ -33,6 +33,8 @@ public class ProjectileHit implements Listener {
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+			break;
+		case ARROW:
 			break;
 		default:
 			break;

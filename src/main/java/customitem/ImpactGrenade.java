@@ -13,10 +13,14 @@ import util.VerifyUtil;
 
 public class ImpactGrenade {
 
+	private static String igkey = "impactgrenade";
 	private static float power = 2.5F;
 
+	public static String getKey() {
+		return igkey;
+	}
+
 	public static void onClick(PlayerInteractEvent event) {
-		String igkey = "ImpactGrenade";
 		int grect = 60; //tick
 		Player player = event.getPlayer();
 		ItemStack is = event.getItem();

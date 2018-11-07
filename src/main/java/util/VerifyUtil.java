@@ -56,14 +56,15 @@ public class VerifyUtil {
 	}
 
 	public static void setEntityClass(Entity en, String tag) {
-		NBTUtil.writeEntityStringTag(en, istypekey, tag);
+		//NBTUtil.writeEntityStringTag(en, istypekey, tag);
+		MetadataUtil.setMetadata(en, istypekey, tag);
 		Bukkit.broadcastMessage("successfully wrote " + tag + " to " + en.getType().toString());
 		return;
 	}
 
 	public static <T> Class<T> getEntityClass(Entity en) {
-		String tag = NBTUtil.readEntityStringTag(en, istypekey);
-		Bukkit.broadcastMessage("successfully read " + tag + " to " + en.getType().toString());
+		String tag = (String) MetadataUtil.getMetadata(en, istypekey);
+		Bukkit.broadcastMessage("successfully read " + tag + " from " + en.getType().toString());
 		return getClassFromStr(tag);
 	}
 

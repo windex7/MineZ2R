@@ -16,9 +16,12 @@ import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.GroupDataEntity;
 import util.NMSUtil;
+import util.RandomUtil;
+import util.StuckUtil;
 import util.VerifyUtil;
 public class ShinyToe extends GeneralZombie {
 	private static String mobkey = "shinytoe";
+	private static double tppos = 0.6;
 
 	public static String getKey() {
 		return mobkey;
@@ -29,11 +32,16 @@ public class ShinyToe extends GeneralZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
-		Entity shinytoe = event.getEntity();
-		Location stloc = shinytoe.getLocation();
-		Location newloc = stloc.add(3, 3, 3);
-		Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
-		shinytoe.teleport(newloc);
+		if (RandomUtil.onPossibility(tppos)) {
+			Entity shinytoe = event.getEntity();
+			Location stloc = shinytoe.getLocation();
+			Location newloc = stloc.clone().add(RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3));
+			while (StuckUtil.isStuck(newloc)) {
+				newloc = stloc.clone().add(RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3));
+			}
+			Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
+			shinytoe.teleport(newloc);
+		}
 	}
 
 	public ShinyToe(World world) {

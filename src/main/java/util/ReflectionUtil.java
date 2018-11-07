@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import customitem.ImpactGrenade;
+import custommob.ShinyToe;
 
 public class ReflectionUtil {
 	private static final Map<String, Class<?>> PRIMITIVE_TYPE_MAP = new HashMap<String, Class<?>>();
 
 	private static final Map<String, Class<?>> ITEM_CLASS_MAP = new HashMap<String, Class<?>>();
+	private static final Map<String, Class<?>> MOB_CLASS_MAP = new HashMap<String, Class<?>>();
 
 	static {
 		registerPrimitiveType("byte", byte.class);
@@ -21,6 +23,8 @@ public class ReflectionUtil {
 		registerPrimitiveType("char", char.class);
 
 		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
+
+		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
 	}
 
 	private ReflectionUtil() {
@@ -33,6 +37,10 @@ public class ReflectionUtil {
 
 	private static void registerItemClass(String itemName, Class<?> clazz) {
 		ITEM_CLASS_MAP.put(itemName, clazz);
+	}
+
+	private static void registerMobClass(String itemName, Class<?> clazz) {
+		MOB_CLASS_MAP.put(itemName, clazz);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,6 +56,16 @@ public class ReflectionUtil {
 	public static <T> Class<T> getItemClass(String tagName) throws ClassNotFoundException {
 		if (ITEM_CLASS_MAP.containsKey(tagName)) {
 			return (Class<T>) ITEM_CLASS_MAP.get(tagName);
+		}
+
+		// return (Class<T>) GeneralItem.class;
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> Class<T> getMobClass(String tagName) throws ClassNotFoundException {
+		if (MOB_CLASS_MAP.containsKey(tagName)) {
+			return (Class<T>) MOB_CLASS_MAP.get(tagName);
 		}
 
 		// return (Class<T>) GeneralItem.class;

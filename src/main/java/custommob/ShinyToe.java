@@ -1,9 +1,13 @@
 package custommob;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -12,7 +16,25 @@ import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.GroupDataEntity;
 import util.NMSUtil;
+import util.VerifyUtil;
 public class ShinyToe extends GeneralZombie {
+	private static String mobkey = "shinytoe";
+
+	public static String getKey() {
+		return mobkey;
+	}
+
+	public static void onHit(EntityDamageByEntityEvent event) {
+		Bukkit.broadcastMessage("shiny toe attacked!!");
+	}
+
+	public static void onGetHit(EntityDamageByEntityEvent event) {
+		Entity shinytoe = event.getEntity();
+		Location stloc = shinytoe.getLocation();
+		Location newloc = stloc.add(3, 3, 3);
+		Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
+		shinytoe.teleport(newloc);
+	}
 
 	public ShinyToe(World world) {
 		super(world);
@@ -45,6 +67,8 @@ public class ShinyToe extends GeneralZombie {
 	    this.setSlot(EnumItemSlot.FEET, NMSUtil.convIStoNMS(bootsis));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
 	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4D);
+
+	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
 	}
 
 	@Override

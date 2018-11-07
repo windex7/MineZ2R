@@ -3,6 +3,7 @@ package custommob;
 import java.util.Set;
 
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.minecraft.server.v1_9_R2.EntityHuman;
 import net.minecraft.server.v1_9_R2.EntityZombie;
@@ -19,6 +20,20 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
 
 public class GeneralZombie extends EntityZombie {
+	private static String mobkey = "generalzombie";
+
+	public static String getKey() {
+		return mobkey;
+	}
+
+	public static void onHit(EntityDamageByEntityEvent event) {
+
+	}
+
+	public static void onGetHit(EntityDamageByEntityEvent event) {
+
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public GeneralZombie(org.bukkit.World world) {
 		super(((CraftWorld)world).getHandle());

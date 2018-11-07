@@ -24,6 +24,7 @@ import command.Stats;
 import command.Tester;
 import customrecipe.shapeless.CustomShapelessRecipe;
 import customrecipe.shapeless.RepairSword;
+import listener.EntityDamageByEntity;
 import listener.PlayerInteract;
 import listener.PlayerLogin;
 import listener.PlayerTeleport;
@@ -121,6 +122,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 
 		// --register events and commands--
+		Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
 		Bukkit.getPluginManager().registerEvents(new ProjectileHit(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerTeleport(), this);

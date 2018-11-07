@@ -44,6 +44,10 @@ public class VerifyUtil {
 	}
 
 	private static String istypekey = "customitem";
+	private static String mobtypekey = "custommob";
+
+	private static final String itemtype = "item";
+	private static final String mobtype = "mob";
 
 	public static ItemStack setItemClass(ItemStack is, String tag) {
 		ItemStack result = NBTUtil.writeItemStringTag(is, istypekey, tag);
@@ -52,26 +56,43 @@ public class VerifyUtil {
 
 	public static <T> Class<T> getItemClass(ItemStack is) {
 		String tag = NBTUtil.readItemStringTag(is, istypekey);
-		return getClassFromStr(tag);
+		return getClassFromStr(tag, itemtype);
 	}
 
 	public static void setEntityClass(Entity en, String tag) {
-		//NBTUtil.writeEntityStringTag(en, istypekey, tag);
 		MetadataUtil.setMetadata(en, istypekey, tag);
-		Bukkit.broadcastMessage("successfully wrote " + tag + " to " + en.getType().toString());
 		return;
 	}
 
 	public static <T> Class<T> getEntityClass(Entity en) {
 		String tag = (String) MetadataUtil.getMetadata(en, istypekey);
-		Bukkit.broadcastMessage("successfully read " + tag + " from " + en.getType().toString());
-		return getClassFromStr(tag);
+		return getClassFromStr(tag, itemtype);
 	}
 
-	public static <T> Class<T> getClassFromStr(String tag) {
+	public static void setMobClass(Entity en, String type) {
+		MetadataUtil.setMetadata(en, mobtypekey, type);
+		Bukkit.broadcastMessage("set mob type: " + type);
+		return;
+	}
+
+	public static <T> Class<T> getMobClass(Entity en) {
+		String type = (String) MetadataUtil.getMetadata(en, mobtypekey);
+		Bukkit.broadcastMessage("get mob type: " + type);
+		return getClassFromStr(type, mobtype);
+	}
+
+	public static <T> Class<T> getClassFromStr(String tag, String type) {
 		if (tag != null && !tag.isEmpty()) {
 			try {
-				return ReflectionUtil.getItemClass(tag);
+				switch (type) {
+				case itemtype:
+					return ReflectionUtil.getItemClass(tag);
+				case mobtype:
+					return ReflectionUtil.getMobClass(tag);
+				default:
+					return null;
+				}
+
 			} catch (ClassNotFoundException e) {
 				return null;
 			}

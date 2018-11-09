@@ -48,26 +48,31 @@ public class ShinyToe extends GeneralZombie {
 		super(world);
 		ItemStack mainhandis = new ItemStack(Material.WOOD_SWORD);
 		mainhandis.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+
 		ItemStack headis = new ItemStack(Material.LEATHER_HELMET);
 		headis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		LeatherArmorMeta headmeta = (LeatherArmorMeta) headis.getItemMeta();
 		headmeta.setColor(Color.YELLOW);
 		headis.setItemMeta(headmeta);
+
 		ItemStack chestis = new ItemStack(Material.LEATHER_CHESTPLATE);
 		chestis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		LeatherArmorMeta chestmeta = (LeatherArmorMeta) headis.getItemMeta();
 		chestmeta.setColor(Color.BLACK);
 		chestis.setItemMeta(chestmeta);
+
 		ItemStack legis = new ItemStack(Material.LEATHER_LEGGINGS);
 		legis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		LeatherArmorMeta legmeta = (LeatherArmorMeta) headis.getItemMeta();
 		legmeta.setColor(Color.BLACK);
 		legis.setItemMeta(legmeta);
+
 		ItemStack bootsis = new ItemStack(Material.LEATHER_BOOTS);
 		bootsis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		LeatherArmorMeta bootsmeta = (LeatherArmorMeta) headis.getItemMeta();
 		bootsmeta.setColor(Color.PURPLE);
 		bootsis.setItemMeta(bootsmeta);
+
 		this.setSlot(EnumItemSlot.MAINHAND, NMSUtil.convIStoNMS(mainhandis));
 	    this.setSlot(EnumItemSlot.HEAD, NMSUtil.convIStoNMS(headis));
 	    this.setSlot(EnumItemSlot.CHEST, NMSUtil.convIStoNMS(chestis));

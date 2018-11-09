@@ -1,9 +1,12 @@
 package custommob;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import net.minecraft.server.v1_9_R2.EntityHuman;
 import net.minecraft.server.v1_9_R2.EntityZombie;
@@ -22,6 +25,17 @@ import util.PrivateField;
 public class GeneralZombie extends EntityZombie {
 	private static String mobkey = "generalzombie";
 
+	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
+		{
+			add(DamageCause.CONTACT);
+			add(DamageCause.DROWNING);
+			add(DamageCause.FALL);
+			add(DamageCause.FIRE);
+			add(DamageCause.FIRE_TICK);
+			add(DamageCause.LAVA);
+		}
+	};
+
 	public static String getKey() {
 		return mobkey;
 	}
@@ -31,7 +45,11 @@ public class GeneralZombie extends EntityZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
-
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -23,6 +23,7 @@ import util.NMSUtil;
 public class Forsaken extends GeneralZombie {
 	private static String mobkey = "forsaken";
 	private static double unenchhp = 10;
+	private static Enchantment ench = Enchantment.PROTECTION_ENVIRONMENTAL;
 
 	private static List<DamageCause> ignore_whenEnch = new ArrayList<DamageCause>() {
 		{
@@ -44,16 +45,21 @@ public class Forsaken extends GeneralZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}
+
 		Entity forsaken = event.getEntity();
 		if (forsaken.isDead()) return;
 		Entity damager = event.getDamager();
 		boolean isplayerdamaged = false;
 		if (damager instanceof Player) isplayerdamaged = true;
-		DamageCause damagesource = event.getCause();
 		LivingEntity lforsaken = (LivingEntity) forsaken;
 		EntityEquipment eq = lforsaken.getEquipment();
-		if (eq.getHelmet().containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) { // enchanted
-			if (ignore_whenEnch.contains(damagesource)) {
+		if (eq.getHelmet().containsEnchantment(ench)) { // enchanted
+			if (ignore_whenEnch.contains(cause)) {
 				event.setCancelled(true);
 				if (isplayerdamaged) damager.sendMessage("nope");
 				return;
@@ -63,11 +69,11 @@ public class Forsaken extends GeneralZombie {
 				lforsaken.setHealth(unenchhp);
 				ItemStack[] armors = eq.getArmorContents();
 				for (ItemStack armor : armors) {
-					armor.removeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+					armor.removeEnchantment(ench);
 				}
 			}
 		} else { // unenchanted
-			if (ignore_whenUnench.contains(damagesource)) {
+			if (ignore_whenUnench.contains(cause)) {
 				event.setCancelled(true);
 				if (isplayerdamaged) damager.sendMessage("nope nope");
 				return;
@@ -84,10 +90,10 @@ public class Forsaken extends GeneralZombie {
 		ItemStack feetis = new ItemStack(Material.IRON_BOOTS);
 
 		mainhandis.addEnchantment(Enchantment.DAMAGE_ALL, 1);
-		headis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chestis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		legsis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		feetis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		headis.addEnchantment(ench, 1);
+		chestis.addEnchantment(ench, 1);
+		legsis.addEnchantment(ench, 1);
+		feetis.addEnchantment(ench, 1);
 
 		this.setSlot(EnumItemSlot.MAINHAND, NMSUtil.convIStoNMS(mainhandis));
 	    this.setSlot(EnumItemSlot.HEAD, NMSUtil.convIStoNMS(headis));

@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -32,6 +33,12 @@ public class ShinyToe extends GeneralZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}
+
 		if (RandomUtil.onPossibility(tppos)) {
 			Entity shinytoe = event.getEntity();
 			Location stloc = shinytoe.getLocation();

@@ -71,13 +71,13 @@ public class VerifyUtil {
 
 	public static void setMobClass(Entity en, String type) {
 		MetadataUtil.setMetadata(en, mobtypekey, type);
-		Bukkit.broadcastMessage("set mob type: " + type);
+		//Bukkit.broadcastMessage("set mob type: " + type);
 		return;
 	}
 
 	public static <T> Class<T> getMobClass(Entity en) {
 		String type = (String) MetadataUtil.getMetadata(en, mobtypekey);
-		Bukkit.broadcastMessage("get mob type: " + type);
+		//Bukkit.broadcastMessage("get mob type: " + type);
 		return getClassFromStr(type, mobtype);
 	}
 

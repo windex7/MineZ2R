@@ -8,6 +8,7 @@ import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -20,6 +21,7 @@ import util.NMSUtil;
 import util.RandomUtil;
 import util.StuckUtil;
 import util.VerifyUtil;
+
 public class ShinyToe extends GeneralZombie {
 	private static String mobkey = "shinytoe";
 	private static double tppos = 0.6;
@@ -33,11 +35,11 @@ public class ShinyToe extends GeneralZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
-		DamageCause cause = event.getCause();
+		/*DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
 			return;
-		}
+		}*/
 
 		if (RandomUtil.onPossibility(tppos)) {
 			Entity shinytoe = event.getEntity();
@@ -46,8 +48,16 @@ public class ShinyToe extends GeneralZombie {
 			while (StuckUtil.isStuck(newloc)) {
 				newloc = stloc.clone().add(RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3));
 			}
-			Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
+			//Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
 			shinytoe.teleport(newloc);
+		}
+	}
+
+	public static void onDamage(EntityDamageEvent event) {
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
 		}
 	}
 

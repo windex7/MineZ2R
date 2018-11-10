@@ -1,11 +1,12 @@
 package main;
 
-import java.io.File;
-import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -24,18 +25,19 @@ import command.Stats;
 import command.Tester;
 import customrecipe.shapeless.CustomShapelessRecipe;
 import customrecipe.shapeless.RepairSword;
-import listener.EntityDamageByEntity;
+import listener.EntityDamage;
 import listener.PlayerInteract;
 import listener.PlayerLogin;
 import listener.PlayerTeleport;
 import listener.ProjectileHit;
 import listener.Recipes;
 import listener.SwapOffhand;
-import net.minecraft.server.v1_9_R2.Item;
+import util.ConfigUtil;
 import util.DamageUtil;
 import util.NBTUtil;
 import util.OffhandUtil;
 import util.RecipeUtil;
+import util.StacksizeUtil;
 import util.TimingUtil;
 
 public class MineZ2R extends JavaPlugin implements Listener{
@@ -57,7 +59,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 	public void onEnable() {
 
 		// --check if datafolder and config.yml exist--
-		try {
+		/*try {
 			if (!getDataFolder().exists()) {
 				getLogger().info("datafolder is not found, creating...");
 				getDataFolder().mkdirs();
@@ -76,7 +78,9 @@ public class MineZ2R extends JavaPlugin implements Listener{
 			}
 		} catch (Exception e) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not create config files!");
-		}
+		}*/
+		ConfigUtil.initConfig();
+
 		// --remove vanilla recipes--
 		RecipeUtil.removeVanillaRecipe();
 
@@ -91,7 +95,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		getServer().addRecipe(booktest);
 
 
-		try {
+		/*try {
 			Item enderpearl = Item.d("ender_pearl");
 			Item cobweb = Item.d("web");
 			Item slimeball = Item.d("slime_ball");
@@ -111,7 +115,9 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		catch (NoSuchFieldException | SecurityException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
-		}
+		}*/
+		StacksizeUtil.initialStackSize();
+
 		new RepairSword();
 		CustomShapelessRecipe rec1 = new CustomShapelessRecipe(new ItemStack(Material.GOLDEN_APPLE, 1, (short)1));
 		rec1.addIngredient(new ItemStack(Material.APPLE));
@@ -122,6 +128,7 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 
 		// --register events and commands--
+		/*
 		Bukkit.getPluginManager().registerEvents(new EntityDamageByEntity(), this);
 		Bukkit.getPluginManager().registerEvents(new ProjectileHit(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
@@ -129,6 +136,19 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		Bukkit.getPluginManager().registerEvents(new PlayerLogin(), this);
 		Bukkit.getPluginManager().registerEvents(new Recipes(), this);
 		Bukkit.getPluginManager().registerEvents(new SwapOffhand(), this);
+		*/
+
+		registerEvents(
+				new EntityDamage(),
+				new ProjectileHit(),
+				new PlayerInteract(),
+				new PlayerTeleport(),
+				new PlayerLogin(),
+				new Recipes(),
+				new SwapOffhand()
+				);
+
+		/*
 		getCommand("login").setExecutor(new Login());
 		getCommand("logout").setExecutor(new Logout());
 		getCommand("recipe").setExecutor(new Recipe());
@@ -139,6 +159,24 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		getCommand("blockplace").setExecutor(new Blockplace());
 		getCommand("multigive").setExecutor(new Multigive());
 		getCommand("openinv").setExecutor(new Openinv());
+		*/
+
+		Map<String, CommandExecutor> commandlist = new HashMap<String, CommandExecutor>() {
+			{
+				put("login", new Login());
+				put("logout", new Logout());
+				put("recipe", new Recipe());
+				put("stats", new Stats());
+				put("prof", new Prof());
+				put("tester", new Tester());
+				put("dev", new Dev());
+				put("blockplace", new Blockplace());
+				put("multigive", new Multigive());
+				put("openinv", new Openinv());
+			}
+		};
+
+		registerCommand(commandlist);
 
 
 		TimingUtil.resetTick();
@@ -153,5 +191,17 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 		// --enabled msg--
 		getLogger().info("Successfully enabled MZ2R plugin.");
+	}
+
+	public void registerEvents(Listener... listeners) {
+		for (Listener listener : listeners) {
+			Bukkit.getPluginManager().registerEvents(listener, this);
+		}
+	}
+
+	public void registerCommand(Map<String, CommandExecutor> commandlist) {
+		for (Entry<String, CommandExecutor> entry : commandlist.entrySet()) {
+			getCommand(entry.getKey()).setExecutor(entry.getValue());
+		}
 	}
 }

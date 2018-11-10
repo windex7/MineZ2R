@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import net.minecraft.server.v1_9_R2.EntityHuman;
@@ -21,6 +23,7 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_9_R2.PathfinderGoalRandomStroll;
 import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
+import util.VerifyUtil;
 
 public class GeneralZombie extends EntityZombie {
 	private static String mobkey = "generalzombie";
@@ -45,6 +48,16 @@ public class GeneralZombie extends EntityZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
+		/*
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}
+		*/
+	}
+
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -73,5 +86,7 @@ public class GeneralZombie extends EntityZombie {
 
 		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35D);
 		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(32.0D);
+
+		VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), getKey());
 	}
 }

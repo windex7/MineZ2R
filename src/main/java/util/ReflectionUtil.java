@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import customitem.ImpactGrenade;
+import custommob.Forsaken;
+import custommob.GeneralZombie;
 import custommob.ShinyToe;
 
 public class ReflectionUtil {
@@ -24,7 +26,9 @@ public class ReflectionUtil {
 
 		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
 
+		registerMobClass(GeneralZombie.getKey(), GeneralZombie.class);
 		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
+		registerMobClass(Forsaken.getKey(), Forsaken.class);
 	}
 
 	private ReflectionUtil() {

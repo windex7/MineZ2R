@@ -3,6 +3,7 @@ package listener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -67,8 +68,9 @@ public class EntityDamage implements Listener{
 				method.invoke(victimclazz, event);
 			} catch (NoSuchMethodException e) {
 				e.printStackTrace();
-			} catch (Exception e) {
+			} catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
+				Bukkit.broadcastMessage(e.getCause().toString());
 			}
 		}
 	}

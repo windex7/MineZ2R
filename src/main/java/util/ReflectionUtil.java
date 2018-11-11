@@ -3,11 +3,6 @@ package util;
 import java.util.HashMap;
 import java.util.Map;
 
-import customitem.ImpactGrenade;
-import custommob.Forsaken;
-import custommob.GeneralZombie;
-import custommob.ShinyToe;
-
 public class ReflectionUtil {
 	private static final Map<String, Class<?>> PRIMITIVE_TYPE_MAP = new HashMap<String, Class<?>>();
 
@@ -23,12 +18,6 @@ public class ReflectionUtil {
 		registerPrimitiveType("float", float.class);
 		registerPrimitiveType("double", double.class);
 		registerPrimitiveType("char", char.class);
-
-		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
-
-		registerMobClass(GeneralZombie.getKey(), GeneralZombie.class);
-		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
-		registerMobClass(Forsaken.getKey(), Forsaken.class);
 	}
 
 	private ReflectionUtil() {
@@ -39,11 +28,11 @@ public class ReflectionUtil {
 		PRIMITIVE_TYPE_MAP.put(typeName, clazz);
 	}
 
-	private static void registerItemClass(String itemName, Class<?> clazz) {
+	public static void registerItemClass(String itemName, Class<?> clazz) {
 		ITEM_CLASS_MAP.put(itemName, clazz);
 	}
 
-	private static void registerMobClass(String itemName, Class<?> clazz) {
+	public static void registerMobClass(String itemName, Class<?> clazz) {
 		MOB_CLASS_MAP.put(itemName, clazz);
 	}
 

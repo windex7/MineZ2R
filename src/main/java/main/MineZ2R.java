@@ -23,6 +23,12 @@ import command.Prof;
 import command.Recipe;
 import command.Stats;
 import command.Tester;
+import customitem.ImpactGrenade;
+import custommob.Forsaken;
+import custommob.GeneralZombie;
+import custommob.IronZombie;
+import custommob.Pigman;
+import custommob.ShinyToe;
 import customrecipe.shapeless.CustomShapelessRecipe;
 import customrecipe.shapeless.RepairSword;
 import listener.EntityDamage;
@@ -37,6 +43,7 @@ import util.DamageUtil;
 import util.NBTUtil;
 import util.OffhandUtil;
 import util.RecipeUtil;
+import util.ReflectionUtil;
 import util.StacksizeUtil;
 import util.TimingUtil;
 
@@ -176,6 +183,14 @@ public class MineZ2R extends JavaPlugin implements Listener{
 			}
 		};
 
+		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
+
+		registerMobClass(GeneralZombie.getKey(), GeneralZombie.class);
+		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
+		registerMobClass(IronZombie.getKey(), IronZombie.class);
+		registerMobClass(Forsaken.getKey(), Forsaken.class);
+		registerMobClass(Pigman.getKey(), Pigman.class);
+
 		registerCommand(commandlist);
 
 
@@ -203,5 +218,13 @@ public class MineZ2R extends JavaPlugin implements Listener{
 		for (Entry<String, CommandExecutor> entry : commandlist.entrySet()) {
 			getCommand(entry.getKey()).setExecutor(entry.getValue());
 		}
+	}
+
+	private void registerItemClass(String itemname, Class<?> clazz) {
+		ReflectionUtil.registerItemClass(itemname, clazz);
+	}
+
+	private void registerMobClass(String mobname, Class<?> clazz) {
+		ReflectionUtil.registerMobClass(mobname, clazz);
 	}
 }

@@ -42,3 +42,7 @@ commands:
     description: open player's inv.
     usage: /openinv player
     default: true
+  custommob:
+    description: summon custommob.
+    usage: /custommob mobname
+    default: true

@@ -1,5 +1,6 @@
 package main;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import command.Blockplace;
+import command.Custommob;
 import command.Dev;
 import command.Login;
 import command.Logout;
@@ -180,10 +182,13 @@ public class MineZ2R extends JavaPlugin implements Listener{
 				put("blockplace", new Blockplace());
 				put("multigive", new Multigive());
 				put("openinv", new Openinv());
+				put("custommob", new Custommob());
 			}
 		};
 
-		registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
+		//registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
+
+		registerItemClasses(ImpactGrenade.class);
 
 		registerMobClass(GeneralZombie.getKey(), GeneralZombie.class);
 		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
@@ -222,6 +227,22 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 	private void registerItemClass(String itemname, Class<?> clazz) {
 		ReflectionUtil.registerItemClass(itemname, clazz);
+	}
+
+	private void registerItemClass(Class<?> clazz) {
+		try {
+			registerItemClass((String)clazz.getMethod("getKey").invoke(null), clazz);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+
+	private void registerItemClasses(Class<?>... clazzes) {
+		for (Class<?> clazz : clazzes) {
+			registerItemClass(clazz);
+		}
 	}
 
 	private void registerMobClass(String mobname, Class<?> clazz) {

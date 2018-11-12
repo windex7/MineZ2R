@@ -1,6 +1,8 @@
 package util;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,8 +40,20 @@ public class ReflectionUtil {
 	}
 
 	public static Set<String> getMobSet() {
+		Set<String> mobset = new HashSet<String>();
+		mobset.addAll(MOB_CLASS_MAP.keySet());
+		return mobset;
+	}
 
-		return MOB_CLASS_MAP.keySet();
+	@SuppressWarnings("unchecked")
+	public static <T> Constructor<T> getMobConstructor(String mobName, Class<?> argclazz) {
+		Class<T> gotclazz = (Class<T>) MOB_CLASS_MAP.get(mobName);
+		try {
+			return gotclazz.getConstructor(argclazz);
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")

@@ -2,6 +2,7 @@ package util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ReflectionUtil {
 	private static final Map<String, Class<?>> PRIMITIVE_TYPE_MAP = new HashMap<String, Class<?>>();
@@ -34,6 +35,11 @@ public class ReflectionUtil {
 
 	public static void registerMobClass(String itemName, Class<?> clazz) {
 		MOB_CLASS_MAP.put(itemName, clazz);
+	}
+
+	public static Set<String> getMobSet() {
+
+		return MOB_CLASS_MAP.keySet();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -3,11 +3,10 @@ package listener;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,25 +15,32 @@ import util.VerifyUtil;
 public class PlayerInteract implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		Player player = event.getPlayer();
-		Action action = event.getAction();
 		Block block = event.getClickedBlock();
 		ItemStack is = event.getItem();
 		if (block != null) {
-			onClickItem(event, player, action, is, true);
+			onClickItem(event, is);
 
+			Material blocktype = block.getType();
+			// ReflectionUtil.getBlockClass(blocktype);
+
+			/*
 			switch (block.getType()) {
 			case SKULL:
+				break;
+			case ENCHANTMENT_TABLE:
+				break;
+			case ENDER_CHEST:
 				break;
 			default:
 				break;
 			}
+			*/
 		} else {
-			onClickItem(event, player, action, is, false);
+			onClickItem(event, is);
 		}
 	}
 
-	public static void onClickItem(PlayerInteractEvent event, Player player, Action action, ItemStack is, boolean clickedblock) {
+	public static void onClickItem(PlayerInteractEvent event, ItemStack is) {
 		String onclickmethodName = "onClick";
 		Class<Object> clazz = VerifyUtil.getItemClass(is);
 		if (clazz == null) return;

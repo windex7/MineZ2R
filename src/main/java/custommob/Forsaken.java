@@ -98,6 +98,21 @@ public class Forsaken extends GeneralZombie {
 			event.setCancelled(true);
 			return;
 		}
+		Entity forsaken = event.getEntity();
+		if (forsaken.isDead()) return;
+		LivingEntity lforsaken = (LivingEntity) forsaken;
+		EntityEquipment eq = lforsaken.getEquipment();
+		if (eq.getHelmet().containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) { // enchanted
+			double hp = lforsaken.getHealth();
+			if (hp <= unenchhp) {
+				lforsaken.setHealth(unenchhp);
+				ItemStack[] armors = eq.getArmorContents();
+				for (ItemStack armor : armors) {
+					armor.removeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+				}
+				eq.setArmorContents(armors);
+			}
+		}
 	}
 
 	public Forsaken(World world) {

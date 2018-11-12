@@ -26,6 +26,7 @@ import command.Recipe;
 import command.Stats;
 import command.Tester;
 import customitem.ImpactGrenade;
+import custommob.BabyPigman;
 import custommob.Forsaken;
 import custommob.GeneralZombie;
 import custommob.IronZombie;
@@ -188,13 +189,27 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 		//registerItemClass(ImpactGrenade.getKey(), ImpactGrenade.class);
 
-		registerItemClasses(ImpactGrenade.class);
+		registerItemClasses(
+				ImpactGrenade.class
+				);
 
+		/*
 		registerMobClass(GeneralZombie.getKey(), GeneralZombie.class);
 		registerMobClass(ShinyToe.getKey(), ShinyToe.class);
 		registerMobClass(IronZombie.getKey(), IronZombie.class);
 		registerMobClass(Forsaken.getKey(), Forsaken.class);
 		registerMobClass(Pigman.getKey(), Pigman.class);
+		*/
+
+		registerMobClasses(
+				GeneralZombie.class,
+				ShinyToe.class,
+				IronZombie.class,
+				Forsaken.class,
+				Pigman.class,
+				BabyPigman.class
+				);
+
 
 		registerCommand(commandlist);
 
@@ -247,5 +262,21 @@ public class MineZ2R extends JavaPlugin implements Listener{
 
 	private void registerMobClass(String mobname, Class<?> clazz) {
 		ReflectionUtil.registerMobClass(mobname, clazz);
+	}
+
+	private void registerMobClass(Class<?> clazz) {
+		try {
+			registerMobClass((String)clazz.getMethod("getKey").invoke(null), clazz);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+	}
+
+	private void registerMobClasses(Class<?>... clazzes) {
+		for (Class<?> clazz : clazzes) {
+			registerMobClass(clazz);
+		}
 	}
 }

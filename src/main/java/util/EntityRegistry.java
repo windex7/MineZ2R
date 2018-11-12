@@ -14,7 +14,8 @@ public enum EntityRegistry {
 	MZ_SHINYTOE("Zombie", 54, custommob.ShinyToe.class),
 	MZ_IRONZOMBIE("Zombie", 54, custommob.IronZombie.class),
 	MZ_FORSAKEN("Zombie", 54, custommob.Forsaken.class),
-	MZ_PIGMAN("PigZombie", 57, custommob.Pigman.class);
+	MZ_PIGMAN("PigZombie", 57, custommob.Pigman.class),
+	MZ_BABYPIGMAN("PigZombie", 57, custommob.BabyPigman.class);
 
 	private EntityRegistry(String name, int id, Class<? extends Entity> custom) {
 		addToMaps(custom, name, id);

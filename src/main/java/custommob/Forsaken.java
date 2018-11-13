@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
@@ -115,6 +116,10 @@ public class Forsaken extends GeneralZombie {
 		}
 	}
 
+	public static void onDeath(EntityDeathEvent event) {
+
+	}
+
 	public Forsaken(World world) {
 		super(world);
 		ItemStack mainhandis = new ItemStack(Material.IRON_SWORD);
@@ -135,6 +140,8 @@ public class Forsaken extends GeneralZombie {
 	    this.setSlot(EnumItemSlot.LEGS, NMSUtil.convIStoNMS(legsis));
 	    this.setSlot(EnumItemSlot.FEET, NMSUtil.convIStoNMS(feetis));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(8.0D);
+
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.34D);
 
 	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
 	}

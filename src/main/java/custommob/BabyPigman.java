@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import net.minecraft.server.v1_9_R2.EntityHuman;
 import net.minecraft.server.v1_9_R2.EntityPigZombie;
@@ -60,6 +61,10 @@ public class BabyPigman extends EntityPigZombie {
 		pig.getWorld().createExplosion(pig.getLocation(), power);
 	}
 
+	public static void onDeath(EntityDeathEvent event) {
+
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public BabyPigman(org.bukkit.World world) {
 		super(((CraftWorld) world).getHandle());
@@ -83,7 +88,7 @@ public class BabyPigman extends EntityPigZombie {
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
 		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
 
-		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4D);
+		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.375D);
 		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(64.0D);
 
 		((PigZombie) this.getBukkitEntity()).setBaby(true);

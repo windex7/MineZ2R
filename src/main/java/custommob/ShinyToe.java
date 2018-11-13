@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
@@ -44,12 +45,13 @@ public class ShinyToe extends GeneralZombie {
 		if (RandomUtil.onPossibility(tppos)) {
 			Entity shinytoe = event.getEntity();
 			Location stloc = shinytoe.getLocation();
-			Location newloc = stloc.clone().add(RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3));
+			RandomUtil rand3 = new RandomUtil(-3, 3);
+			Location newloc = stloc.clone().add(rand3.getRand(), rand3.getRand(), rand3.getRand());
 			while (StuckUtil.isStuck(newloc)) {
-				newloc = stloc.clone().add(RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3), RandomUtil.getRand(-3, 3));
+				newloc = stloc.clone().add(rand3.getRand(), rand3.getRand(), rand3.getRand());
 			}
 			//Bukkit.broadcastMessage("teleported shinytoe to " + newloc.getBlockX() + newloc.getBlockY() + newloc.getBlockZ());
-			shinytoe.teleport(newloc);
+			shinytoe.teleport(newloc.getBlock().getLocation());
 		}
 	}
 
@@ -59,6 +61,10 @@ public class ShinyToe extends GeneralZombie {
 			event.setCancelled(true);
 			return;
 		}
+	}
+
+	public static void onDeath(EntityDeathEvent event) {
+
 	}
 
 	public ShinyToe(World world) {
@@ -96,7 +102,7 @@ public class ShinyToe extends GeneralZombie {
 	    this.setSlot(EnumItemSlot.LEGS, NMSUtil.convIStoNMS(legis));
 	    this.setSlot(EnumItemSlot.FEET, NMSUtil.convIStoNMS(bootsis));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
-	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.4D);
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.37D);
 
 	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
 	}

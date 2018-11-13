@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import net.minecraft.server.v1_9_R2.EntityHuman;
 import net.minecraft.server.v1_9_R2.EntityZombie;
@@ -63,6 +64,10 @@ public class GeneralZombie extends EntityZombie {
 			event.setCancelled(true);
 			return;
 		}
+	}
+
+	public static void onDeath(EntityDeathEvent event) {
+
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

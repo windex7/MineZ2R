@@ -2,26 +2,31 @@ package custommob;
 
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
-import net.minecraft.server.v1_9_R2.ItemStack;
-import net.minecraft.server.v1_9_R2.Items;
 import util.VerifyUtil;
 
-public class IronZombie extends GeneralZombie{
-	private static String mobkey = "ironzombie";
+public class LegChopper extends GeneralZombie{
+	private static String mobkey = "legchopper";
 
 	public static String getKey() {
 		return mobkey;
 	}
 
 	public static void onHit(EntityDamageByEntityEvent event) {
-		//Bukkit.broadcastMessage("iron zombie attacked!!");
+		Entity victim = event.getEntity();
+		if (victim.isDead()) return;
+		((LivingEntity) victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2), true);
+		event.setDamage(0);
+		event.setCancelled(true);
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
@@ -44,16 +49,15 @@ public class IronZombie extends GeneralZombie{
 
 	}
 
-	public IronZombie(World world) {
+	public LegChopper(World world) {
 		super(world);
-		this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-	    this.setSlot(EnumItemSlot.HEAD, new ItemStack(Items.IRON_HELMET));
-	    this.setSlot(EnumItemSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
-	    this.setSlot(EnumItemSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
-	    this.setSlot(EnumItemSlot.FEET, new ItemStack(Items.IRON_BOOTS));
 	    this.getAttributeInstance(GenericAttributes.g).setValue(8.0D);
 
-	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35D);
+	    //this.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(-10);
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.45D);
+		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(64.0D);
+
+		((Zombie) this.getBukkitEntity()).setBaby(true);
 
 	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
 	}

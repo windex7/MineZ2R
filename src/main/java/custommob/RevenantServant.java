@@ -2,16 +2,23 @@ package custommob;
 
 import java.util.Set;
 
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 
+import net.minecraft.server.v1_9_R2.DifficultyDamageScaler;
 import net.minecraft.server.v1_9_R2.EntityHuman;
-import net.minecraft.server.v1_9_R2.EntityPigZombie;
+import net.minecraft.server.v1_9_R2.EntitySkeleton;
+import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
+import net.minecraft.server.v1_9_R2.GroupDataEntity;
 import net.minecraft.server.v1_9_R2.PathfinderGoalFloat;
 import net.minecraft.server.v1_9_R2.PathfinderGoalHurtByTarget;
 import net.minecraft.server.v1_9_R2.PathfinderGoalLookAtPlayer;
@@ -21,12 +28,12 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_9_R2.PathfinderGoalRandomLookaround;
 import net.minecraft.server.v1_9_R2.PathfinderGoalRandomStroll;
 import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
+import util.NMSUtil;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class Pigman extends EntityPigZombie {
-	private static String mobkey = "adultpig";
-	private static float power = 3;
+public class RevenantServant extends EntitySkeleton{
+	private static String mobkey = "revenantservant";
 
 	public static String getKey() {
 		return mobkey;
@@ -37,26 +44,11 @@ public class Pigman extends EntityPigZombie {
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
-		/*
-		DamageCause cause = event.getCause();
-		if (ignore_damagecause.contains(cause)) {
-			event.setCancelled(true);
-			return;
-		}
-		*/
+
 	}
 
 	public static void onDamage(EntityDamageEvent event) {
-		Entity pig = event.getEntity();
 		//DamageCause cause = event.getCause();
-		/*
-		if (ignore_damagecause.contains(cause)) {
-			event.setCancelled(true);
-			return;
-		}
-		*/
-		if (!pig.isDead()) ((LivingEntity) pig).setHealth(0);
-		pig.getWorld().createExplosion(pig.getLocation(), power);
 	}
 
 	public static void onDeath(EntityDeathEvent event) {
@@ -64,9 +56,8 @@ public class Pigman extends EntityPigZombie {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Pigman(org.bukkit.World world) {
+	public RevenantServant(World world) {
 		super(((CraftWorld)world).getHandle());
-
 		Set goalB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, this.goalSelector); goalB.clear();
 		Set goalC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, this.goalSelector); goalC.clear();
 		Set targetB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, this.targetSelector); targetB.clear();
@@ -82,9 +73,31 @@ public class Pigman extends EntityPigZombie {
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
 		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
 
-		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.37D);
-		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(64.0D);
+		ItemStack mainhandis = new ItemStack(Material.STONE_SWORD);
+		this.setSlot(EnumItemSlot.MAINHAND, NMSUtil.convIStoNMS(mainhandis));
 
-		VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), getKey());
+	    this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.37D);
+
+	    ((Skeleton) this.getBukkitEntity()).setSkeletonType(SkeletonType.WITHER);
+
+	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
+	}
+
+	@Override
+	public void initAttributes() {
+		super.initAttributes();
+		this.getAttributeInstance(GenericAttributes.g).setValue(5.0D);
+	}
+
+	@Override
+	public GroupDataEntity prepare(DifficultyDamageScaler dds, GroupDataEntity gde) {
+	    // Calling the super method FIRST, so in case it changes the equipment, our equipment overrides it.
+	    gde = super.prepare(dds, gde);
+	    // We'll set the main hand to a bow and head to a pumpkin now!
+	    //this.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.WOODEN_HOE));
+	    //this.setSlot(EnumItemSlot.HEAD, new ItemStack(Blocks.PUMPKIN));
+	    // Last, returning the GroupDataEntity called gde.
+	    return gde;
 	}
 }

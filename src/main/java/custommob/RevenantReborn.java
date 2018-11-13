@@ -1,6 +1,5 @@
 package custommob;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
@@ -10,25 +9,16 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import main.MineZ2R;
 import net.minecraft.server.v1_9_R2.DifficultyDamageScaler;
 import net.minecraft.server.v1_9_R2.EnumItemSlot;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import net.minecraft.server.v1_9_R2.GroupDataEntity;
 import util.NMSUtil;
-import util.RandomUtil;
-import util.SpawnMobUtil;
-import util.StuckUtil;
 import util.VerifyUtil;
 
-public class Revenant extends GeneralZombie {
-	private static String mobkey = "revenant";
-	private static int servantnum = 4;
-	private static double servantr = 7;
-	private static long servantborndelay = 100; //tick
+public class RevenantReborn extends GeneralZombie {
+	private static String mobkey = "revenantreborn";
 
 	public static String getKey() {
 		return mobkey;
@@ -51,41 +41,21 @@ public class Revenant extends GeneralZombie {
 	}
 
 	public static void onDeath(EntityDeathEvent event) {
-		Plugin mz2r = MineZ2R.getInstance();
-		Entity revenant = event.getEntity();
-		Location revloc = revenant.getLocation();
-		Location[] servantloc = new Location[servantnum];
-		RandomUtil servantrand = new RandomUtil(-1 * servantr, servantr);
-		for (int i = 0; i < servantnum; i++) {
-			servantloc[i] = StuckUtil.toSurface(revloc.clone().add(servantrand.getRand(), servantrand.getRand(), servantrand.getRand()));
-		}
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				for (Location loc : servantloc) {
-					SpawnMobUtil.spawnCustomMob("revenantservant", loc);
-				}
-				SpawnMobUtil.spawnCustomMob("revenantreborn", revloc);
-			}
-		}.runTaskLater(mz2r, servantborndelay);
+
 	}
 
-	public Revenant(World world) {
+	public RevenantReborn(World world) {
 		super(world);
 		ItemStack mainhandis = new ItemStack(Material.STONE_SWORD);
 		mainhandis.addEnchantment(Enchantment.DAMAGE_ALL, 1);
 
 		ItemStack headis = new ItemStack(Material.CHAINMAIL_HELMET);
-		headis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 		ItemStack chestis = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-		chestis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 		ItemStack legis = new ItemStack(Material.CHAINMAIL_LEGGINGS);
-		legis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 		ItemStack bootsis = new ItemStack(Material.CHAINMAIL_BOOTS);
-		bootsis.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 
 		this.setSlot(EnumItemSlot.MAINHAND, NMSUtil.convIStoNMS(mainhandis));
 	    this.setSlot(EnumItemSlot.HEAD, NMSUtil.convIStoNMS(headis));

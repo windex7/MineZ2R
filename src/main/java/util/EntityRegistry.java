@@ -13,9 +13,13 @@ public enum EntityRegistry {
 	MZ_ZOMBIE("Zombie", 54, custommob.GeneralZombie.class),
 	MZ_SHINYTOE("Zombie", 54, custommob.ShinyToe.class),
 	MZ_IRONZOMBIE("Zombie", 54, custommob.IronZombie.class),
+	MZ_REVENANT("Zombie", 54, custommob.Revenant.class),
+	MZ_REVENANTRE("Zombie", 54, custommob.RevenantReborn.class),
+	MZ_REVENANTSERVANT("Skeleton", 51, custommob.RevenantServant.class), // <- if set to 52, it spawns a creature it looks like spider but actually wither skeleton, which drops bones and coals lol
 	MZ_FORSAKEN("Zombie", 54, custommob.Forsaken.class),
 	MZ_PIGMAN("PigZombie", 57, custommob.Pigman.class),
-	MZ_BABYPIGMAN("PigZombie", 57, custommob.BabyPigman.class);
+	MZ_BABYPIGMAN("PigZombie", 57, custommob.BabyPigman.class),
+	MZ_LEGCHOPPER("Zombie", 54, custommob.LegChopper.class);
 
 	private EntityRegistry(String name, int id, Class<? extends Entity> custom) {
 		addToMaps(custom, name, id);

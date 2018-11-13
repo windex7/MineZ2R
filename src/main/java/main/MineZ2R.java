@@ -30,7 +30,11 @@ import custommob.BabyPigman;
 import custommob.Forsaken;
 import custommob.GeneralZombie;
 import custommob.IronZombie;
+import custommob.LegChopper;
 import custommob.Pigman;
+import custommob.Revenant;
+import custommob.RevenantReborn;
+import custommob.RevenantServant;
 import custommob.ShinyToe;
 import customrecipe.shapeless.CustomShapelessRecipe;
 import customrecipe.shapeless.RepairSword;
@@ -205,9 +209,13 @@ public class MineZ2R extends JavaPlugin implements Listener{
 				GeneralZombie.class,
 				ShinyToe.class,
 				IronZombie.class,
+				Revenant.class,
+				RevenantReborn.class,
+				RevenantServant.class,
 				Forsaken.class,
 				Pigman.class,
-				BabyPigman.class
+				BabyPigman.class,
+				LegChopper.class
 				);
 
 

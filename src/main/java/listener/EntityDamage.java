@@ -5,10 +5,12 @@ import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import util.VerifyUtil;
 
@@ -17,6 +19,8 @@ public class EntityDamage implements Listener{
 	private static String ongethitmethodName = "onGetHit";
 
 	private static String ondamagedmethodName = "onDamage";
+
+	private static String ondeathmethodName = "onDeath";
 
 	@EventHandler
 	public static void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
@@ -37,8 +41,8 @@ public class EntityDamage implements Listener{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-		} else {
-			//Bukkit.broadcastMessage("not registered mob type");
+		} else if (damager instanceof Player) {
+
 		}
 
 		Class<Object> victimclazz = VerifyUtil.getMobClass(victim);
@@ -53,8 +57,8 @@ public class EntityDamage implements Listener{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
-		} else {
-			//Bukkit.broadcastMessage("not registered mob type");
+		} else if (victim instanceof Player) {
+
 		}
 	}
 
@@ -72,7 +76,27 @@ public class EntityDamage implements Listener{
 				e.printStackTrace();
 				Bukkit.broadcastMessage(e.getCause().toString());
 			}
+		} else if (victim instanceof Player) {
+
 		}
 	}
 
+	@EventHandler
+	public static void onEntityDeath(EntityDeathEvent event) {
+		Entity victim = event.getEntity();
+		Class<Object> victimclazz = VerifyUtil.getMobClass(victim);
+		if (victimclazz != null) {
+			try {
+				Method method = victimclazz.getMethod(ondeathmethodName, EntityDeathEvent.class);
+				method.invoke(victimclazz, event);
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			} catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+				Bukkit.broadcastMessage(e.getCause().toString());
+			}
+		} else if (victim instanceof Player) {
+
+		}
+	}
 }

@@ -1,5 +1,7 @@
 package custommob;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Material;
@@ -10,6 +12,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,6 +38,17 @@ import util.VerifyUtil;
 public class RevenantServant extends EntitySkeleton{
 	private static String mobkey = "revenantservant";
 
+	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
+		{
+			add(DamageCause.CONTACT);
+			add(DamageCause.DROWNING);
+			add(DamageCause.FALL);
+			add(DamageCause.FIRE);
+			add(DamageCause.FIRE_TICK);
+			add(DamageCause.LAVA);
+		}
+	};
+
 	public static String getKey() {
 		return mobkey;
 	}
@@ -48,7 +62,11 @@ public class RevenantServant extends EntitySkeleton{
 	}
 
 	public static void onDamage(EntityDamageEvent event) {
-		//DamageCause cause = event.getCause();
+		DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 
 	public static void onDeath(EntityDeathEvent event) {

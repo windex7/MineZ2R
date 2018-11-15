@@ -29,8 +29,10 @@ import customitem.ImpactGrenade;
 import custommob.BabyPigman;
 import custommob.Forsaken;
 import custommob.GeneralZombie;
+import custommob.Giant;
 import custommob.IronZombie;
 import custommob.LegChopper;
+import custommob.MineZHorse;
 import custommob.Pigman;
 import custommob.Revenant;
 import custommob.RevenantReborn;
@@ -215,22 +217,32 @@ public class MineZ2R extends JavaPlugin implements Listener{
 				Forsaken.class,
 				Pigman.class,
 				BabyPigman.class,
-				LegChopper.class
+				LegChopper.class,
+				MineZHorse.class,
+				Giant.class
 				);
 
 
 		registerCommand(commandlist);
 
+		final int nodamagetick = 10;
 
 		TimingUtil.resetTick();
 		new BukkitRunnable() {
 			@Override
 			public void run() {
 				TimingUtil.tick();
-				DamageUtil.removeDamageTickAllEntity();
-				OffhandUtil.checkAllOffhand();
 			}
 		}.runTaskTimer(instance, 1, 1);
+
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				//DamageUtil.removeDamageTickAllEntity();
+				DamageUtil.setMaxDamageTickAllEntity(nodamagetick);
+				OffhandUtil.checkAllOffhand();
+			}
+		}.runTaskTimer(instance, 1, 20); // period was 1 but can be longer, set to 20
 
 		// --enabled msg--
 		getLogger().info("Successfully enabled MZ2R plugin.");

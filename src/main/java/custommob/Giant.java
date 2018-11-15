@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -27,8 +28,10 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class GeneralZombie extends EntityZombie {
-	private static String mobkey = "generalzombie";
+public class Giant extends EntityZombie{
+	private static String mobkey = "giant";
+
+	private static double health = 2000;
 
 	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
 		{
@@ -46,14 +49,15 @@ public class GeneralZombie extends EntityZombie {
 	}
 
 	public static void onHit(EntityDamageByEntityEvent event) {
-
+		//Bukkit.broadcastMessage("iron zombie attacked!!");
 	}
 
 	public static void onGetHit(EntityDamageByEntityEvent event) {
-		Entity damager = event.getDamager();
-		if (damager instanceof Player) {
-
-		}
+		/*DamageCause cause = event.getCause();
+		if (ignore_damagecause.contains(cause)) {
+			event.setCancelled(true);
+			return;
+		}*/
 	}
 
 	public static void onDamage(EntityDamageEvent event) {
@@ -69,8 +73,10 @@ public class GeneralZombie extends EntityZombie {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public GeneralZombie(org.bukkit.World world) {
+	public Giant(World world) {
 		super(((CraftWorld)world).getHandle());
+
+		setSize(this.width * 6.0F, this.length * 6.0F);
 
 		Set goalB = (Set)PrivateField.getPrivateField("b", PathfinderGoalSelector.class, this.goalSelector); goalB.clear();
 		Set goalC = (Set)PrivateField.getPrivateField("c", PathfinderGoalSelector.class, this.goalSelector); goalC.clear();
@@ -87,9 +93,17 @@ public class GeneralZombie extends EntityZombie {
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
 		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, true));
 
-		this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35D);
-		this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(32.0D);
+	    this.getAttributeInstance(GenericAttributes.g).setValue(8.0D);
 
-		VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), getKey());
+	    this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.35D);
+	    this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(128.0D);
+	    this.getAttributeInstance(GenericAttributes.c).setValue(1); // kb
+
+	    Zombie giant = (Zombie) this.getBukkitEntity();
+	    giant.setMaxHealth(health);
+	    giant.setHealth(health);
+	    giant.setSilent(true);
+
+	    VerifyUtil.setMobClass((Entity) this.getBukkitEntity(), mobkey);
 	}
 }

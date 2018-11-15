@@ -14,13 +14,29 @@ import net.minecraft.server.v1_9_R2.NBTTagCompound;
 
 public class NBTUtil {
 	public static String readItemStringTag(ItemStack item, String key) {
-		if (!(item != null) || item.getType() == Material.AIR) return null;
+		if (!(item != null) || item.getType() == Material.AIR)
+			return null;
 		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound nbttag = nmsItem.getTag();
 		if (nbttag != null) {
 			if (nbttag.hasKey(key)) {
-			String value = nbttag.getString(key);
-			return value;
+				String value = nbttag.getString(key);
+				return value;
+			}
+			return null;
+		}
+		return null;
+	}
+
+	public static Integer readItemIntTag(ItemStack item, String key) {
+		if (!(item != null) || item.getType() == Material.AIR)
+			return null;
+		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound nbttag = nmsItem.getTag();
+		if (nbttag != null) {
+			if (nbttag.hasKey(key)) {
+				int value = nbttag.getInt(key);
+				return value;
 			}
 			return null;
 		}
@@ -28,30 +44,53 @@ public class NBTUtil {
 	}
 
 	public static ItemStack writeItemStringTag(ItemStack item, String key, String value) {
-		if (!(item != null) || item.getType() == Material.AIR) return item;
+		if (!(item != null) || item.getType() == Material.AIR)
+			return item;
 		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound nbttag = nmsItem.getTag();
 		if (value != null && !(value.equals("null"))) {
 			if (nbttag != null) {
 				nbttag.setString(key, value);
 				nmsItem.setTag(nbttag);
-			}
-			else {
+			} else {
 				NBTTagCompound newnbttag = new NBTTagCompound();
 				newnbttag.setString(key, value);
 				nmsItem.setTag(newnbttag);
 			}
 			ItemStack nbtitem = CraftItemStack.asBukkitCopy(nmsItem);
 			return nbtitem;
-		}
-		else {
+		} else {
 			// called when value is null
 			return removeItemStringTag(item, key);
 		}
 	}
 
+	public static ItemStack writeItemIntTag(ItemStack item, String key, int value) {
+		if (!(item != null) || item.getType() == Material.AIR)
+			return item;
+		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		NBTTagCompound nbttag = nmsItem.getTag();
+		if (value > 0) {
+			if (nbttag != null) {
+				nbttag.setInt(key, value);
+				nmsItem.setTag(nbttag);
+			} else {
+				NBTTagCompound newnbttag = new NBTTagCompound();
+				newnbttag.setInt(key, value);
+				nmsItem.setTag(newnbttag);
+			}
+			ItemStack nbtitem = CraftItemStack.asBukkitCopy(nmsItem);
+			return nbtitem;
+		} else {
+			// called when value is minus
+			//return removeItemStringTag(item, key);
+			return item;
+		}
+	}
+
 	public static ItemStack removeItemStringTag(ItemStack item, String key) {
-		if (!(item != null) || item.getType() == Material.AIR) return item;
+		if (!(item != null) || item.getType() == Material.AIR)
+			return item;
 		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
 		NBTTagCompound nbttag = nmsItem.getTag();
 		if (nbttag != null) {
@@ -62,30 +101,6 @@ public class NBTUtil {
 		return nbtitem;
 	}
 
-	public static ItemStack writeItemIntTag(ItemStack item, String key, int value) {
-		if (!(item != null) || item.getType() == Material.AIR) return item;
-		net.minecraft.server.v1_9_R2.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-		NBTTagCompound nbttag = nmsItem.getTag();
-		if (value > 0) {
-			if (nbttag != null) {
-				nbttag.setInt(key, value);
-				nmsItem.setTag(nbttag);
-			}
-			else {
-				NBTTagCompound newnbttag = new NBTTagCompound();
-				newnbttag.setInt(key, value);
-				nmsItem.setTag(newnbttag);
-			}
-			ItemStack nbtitem = CraftItemStack.asBukkitCopy(nmsItem);
-			return nbtitem;
-		}
-		else {
-			// called when value is minus
-			//return removeItemStringTag(item, key);
-			return item;
-		}
-	}
-
 	public static void writeEntityStringTag(Entity entity, String key, String value) {
 		CraftEntity craft = ((CraftEntity) entity);
 		net.minecraft.server.v1_9_R2.Entity nmsEntity = craft.getHandle();
@@ -93,20 +108,20 @@ public class NBTUtil {
 		nmsEntity.c(nbttag);
 		nbttag.setString(key, value);
 		Class<?> entityClass = nmsEntity.getClass();
-	    Method[] methods = entityClass.getMethods();
-	    for (Method method : methods) {
-	        if ((method.getName() == "a")
-	                && (method.getParameterTypes().length == 1)
-	                && (method.getParameterTypes()[0] == NBTTagCompound.class)) {
-	            try {
-	                method.setAccessible(true);
-	                method.invoke(nmsEntity, nbttag);
-	            } catch (Exception ex) {
-	                ex.printStackTrace();
-	            }
-	        }
-	    }
-	    craft.setHandle(nmsEntity);
+		Method[] methods = entityClass.getMethods();
+		for (Method method : methods) {
+			if ((method.getName() == "a")
+					&& (method.getParameterTypes().length == 1)
+					&& (method.getParameterTypes()[0] == NBTTagCompound.class)) {
+				try {
+					method.setAccessible(true);
+					method.invoke(nmsEntity, nbttag);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		craft.setHandle(nmsEntity);
 	}
 
 	public static String readEntityStringTag(Entity entity, String key) {

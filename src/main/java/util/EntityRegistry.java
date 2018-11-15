@@ -19,7 +19,9 @@ public enum EntityRegistry {
 	MZ_FORSAKEN("Zombie", 54, custommob.Forsaken.class),
 	MZ_PIGMAN("PigZombie", 57, custommob.Pigman.class),
 	MZ_BABYPIGMAN("PigZombie", 57, custommob.BabyPigman.class),
-	MZ_LEGCHOPPER("Zombie", 54, custommob.LegChopper.class);
+	MZ_LEGCHOPPER("Zombie", 54, custommob.LegChopper.class),
+	MZ_HORSE("EntityHorse", 100, custommob.MineZHorse.class),
+	MZ_GIANT("Zombie", 53, custommob.Giant.class);
 
 	private EntityRegistry(String name, int id, Class<? extends Entity> custom) {
 		addToMaps(custom, name, id);

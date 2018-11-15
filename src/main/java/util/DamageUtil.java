@@ -25,7 +25,8 @@ public class DamageUtil {
 	}
 
 	public static void removeDamageTick(LivingEntity entity) {
-		entity.setMaximumNoDamageTicks(0);
+		//entity.setMaximumNoDamageTicks(0);
+		setMaxDamageTick(entity, 0);
 		return;
 	}
 
@@ -33,6 +34,18 @@ public class DamageUtil {
 		for (World world : Bukkit.getServer().getWorlds()) {
 			for (LivingEntity entity : world.getLivingEntities()) {
 				removeDamageTick(entity);
+			}
+		}
+	}
+
+	public static void setMaxDamageTick(LivingEntity entity, int tick) {
+		entity.setMaximumNoDamageTicks(tick);
+	}
+
+	public static void setMaxDamageTickAllEntity(int tick) {
+		for (World world : Bukkit.getServer().getWorlds()) {
+			for (LivingEntity entity : world.getLivingEntities()) {
+				setMaxDamageTick(entity, tick);
 			}
 		}
 	}

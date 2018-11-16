@@ -14,14 +14,14 @@ import org.bukkit.potion.PotionEffectType;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import util.VerifyUtil;
 
-public class LegChopper extends GeneralZombie implements CustomMob {
+public class LegChopper extends GeneralZombie{
 	private static String mobkey = "legchopper";
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 		Entity victim = event.getEntity();
 		if (victim.isDead()) return;
 		((LivingEntity) victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2), true);
@@ -29,7 +29,7 @@ public class LegChopper extends GeneralZombie implements CustomMob {
 		event.setCancelled(true);
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 		/*DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -37,7 +37,7 @@ public class LegChopper extends GeneralZombie implements CustomMob {
 		}*/
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -45,7 +45,7 @@ public class LegChopper extends GeneralZombie implements CustomMob {
 		}
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

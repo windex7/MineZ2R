@@ -28,7 +28,7 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class Giant extends EntityZombie implements CustomMob{
+public class Giant extends EntityZombie{
 	private static String mobkey = "giant";
 
 	private static double health = 2000;
@@ -44,15 +44,15 @@ public class Giant extends EntityZombie implements CustomMob{
 		}
 	};
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 		//Bukkit.broadcastMessage("iron zombie attacked!!");
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 		/*DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -60,7 +60,7 @@ public class Giant extends EntityZombie implements CustomMob{
 		}*/
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -68,7 +68,7 @@ public class Giant extends EntityZombie implements CustomMob{
 		}
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

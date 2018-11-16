@@ -40,15 +40,15 @@ public class Forsaken extends GeneralZombie {
 		}
 	};
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 		Bukkit.broadcastMessage("let's go Chinaaaaa");
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 		DamageCause cause = event.getCause();
 		/*
 		if (ignore_damagecause.contains(cause)) {
@@ -93,7 +93,7 @@ public class Forsaken extends GeneralZombie {
 		}
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -116,7 +116,7 @@ public class Forsaken extends GeneralZombie {
 		}
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

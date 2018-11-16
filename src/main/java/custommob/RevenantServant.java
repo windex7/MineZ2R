@@ -35,7 +35,7 @@ import util.NMSUtil;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class RevenantServant extends EntitySkeleton implements CustomMob {
+public class RevenantServant extends EntitySkeleton{
 	private static String mobkey = "revenantservant";
 
 	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
@@ -49,19 +49,19 @@ public class RevenantServant extends EntitySkeleton implements CustomMob {
 		}
 	};
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -69,7 +69,7 @@ public class RevenantServant extends EntitySkeleton implements CustomMob {
 		}
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

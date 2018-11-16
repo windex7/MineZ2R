@@ -24,19 +24,19 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class Pigman extends EntityPigZombie implements CustomMob {
+public class Pigman extends EntityPigZombie {
 	private static String mobkey = "adultpig";
 	private static float power = 3;
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 		/*
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
@@ -46,7 +46,7 @@ public class Pigman extends EntityPigZombie implements CustomMob {
 		*/
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		Entity pig = event.getEntity();
 		//DamageCause cause = event.getCause();
 		/*
@@ -59,7 +59,7 @@ public class Pigman extends EntityPigZombie implements CustomMob {
 		pig.getWorld().createExplosion(pig.getLocation(), power);
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

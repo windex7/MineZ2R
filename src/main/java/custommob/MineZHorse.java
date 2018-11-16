@@ -18,7 +18,7 @@ import net.minecraft.server.v1_9_R2.EntityHorse;
 import net.minecraft.server.v1_9_R2.GenericAttributes;
 import util.VerifyUtil;
 
-public class MineZHorse extends EntityHorse implements CustomMob {
+public class MineZHorse extends EntityHorse{
 	private static String mobkey = "poweredsuit";
 
 	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
@@ -32,15 +32,15 @@ public class MineZHorse extends EntityHorse implements CustomMob {
 		}
 	};
 
-	public String getKey() {
+	public static String getKey() {
 		return mobkey;
 	}
 
-	public void onHit(EntityDamageByEntityEvent event) {
+	public static void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public void onGetHit(EntityDamageByEntityEvent event) {
+	public static void onGetHit(EntityDamageByEntityEvent event) {
 		/*
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
@@ -50,7 +50,7 @@ public class MineZHorse extends EntityHorse implements CustomMob {
 		*/
 	}
 
-	public void onDamage(EntityDamageEvent event) {
+	public static void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -58,7 +58,7 @@ public class MineZHorse extends EntityHorse implements CustomMob {
 		}
 	}
 
-	public void onDeath(EntityDeathEvent event) {
+	public static void onDeath(EntityDeathEvent event) {
 
 	}
 

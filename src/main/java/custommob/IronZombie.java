@@ -13,18 +13,18 @@ import net.minecraft.server.v1_9_R2.ItemStack;
 import net.minecraft.server.v1_9_R2.Items;
 import util.VerifyUtil;
 
-public class IronZombie extends GeneralZombie{
+public class IronZombie extends GeneralZombie implements CustomMob {
 	private static String mobkey = "ironzombie";
 
-	public static String getKey() {
+	public String getKey() {
 		return mobkey;
 	}
 
-	public static void onHit(EntityDamageByEntityEvent event) {
+	public void onHit(EntityDamageByEntityEvent event) {
 		//Bukkit.broadcastMessage("iron zombie attacked!!");
 	}
 
-	public static void onGetHit(EntityDamageByEntityEvent event) {
+	public void onGetHit(EntityDamageByEntityEvent event) {
 		/*DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -32,7 +32,7 @@ public class IronZombie extends GeneralZombie{
 		}*/
 	}
 
-	public static void onDamage(EntityDamageEvent event) {
+	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -40,7 +40,7 @@ public class IronZombie extends GeneralZombie{
 		}
 	}
 
-	public static void onDeath(EntityDeathEvent event) {
+	public void onDeath(EntityDeathEvent event) {
 
 	}
 

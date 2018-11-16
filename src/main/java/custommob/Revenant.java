@@ -24,25 +24,25 @@ import util.SpawnMobUtil;
 import util.StuckUtil;
 import util.VerifyUtil;
 
-public class Revenant extends GeneralZombie {
+public class Revenant extends GeneralZombie implements CustomMob {
 	private static String mobkey = "revenant";
 	private static int servantnum = 4;
 	private static double servantr = 7;
 	private static long servantborndelay = 100; //tick
 
-	public static String getKey() {
+	public String getKey() {
 		return mobkey;
 	}
 
-	public static void onHit(EntityDamageByEntityEvent event) {
+	public void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public static void onGetHit(EntityDamageByEntityEvent event) {
+	public void onGetHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public static void onDamage(EntityDamageEvent event) {
+	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -50,7 +50,7 @@ public class Revenant extends GeneralZombie {
 		}
 	}
 
-	public static void onDeath(EntityDeathEvent event) {
+	public void onDeath(EntityDeathEvent event) {
 		Plugin mz2r = MineZ2R.getInstance();
 		Entity revenant = event.getEntity();
 		Location revloc = revenant.getLocation();

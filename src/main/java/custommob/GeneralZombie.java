@@ -27,7 +27,7 @@ import net.minecraft.server.v1_9_R2.PathfinderGoalSelector;
 import util.PrivateField;
 import util.VerifyUtil;
 
-public class GeneralZombie extends EntityZombie {
+public class GeneralZombie extends EntityZombie implements CustomMob{
 	private static String mobkey = "generalzombie";
 
 	protected static List<DamageCause> ignore_damagecause = new ArrayList<DamageCause>() {
@@ -41,22 +41,22 @@ public class GeneralZombie extends EntityZombie {
 		}
 	};
 
-	public static String getKey() {
+	public String getKey() {
 		return mobkey;
 	}
 
-	public static void onHit(EntityDamageByEntityEvent event) {
+	public void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public static void onGetHit(EntityDamageByEntityEvent event) {
+	public void onGetHit(EntityDamageByEntityEvent event) {
 		Entity damager = event.getDamager();
 		if (damager instanceof Player) {
 
 		}
 	}
 
-	public static void onDamage(EntityDamageEvent event) {
+	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -64,7 +64,7 @@ public class GeneralZombie extends EntityZombie {
 		}
 	}
 
-	public static void onDeath(EntityDeathEvent event) {
+	public void onDeath(EntityDeathEvent event) {
 
 	}
 

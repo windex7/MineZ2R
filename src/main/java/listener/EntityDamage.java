@@ -1,9 +1,5 @@
 package listener;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import custommob.CustomMob;
 import util.VerifyUtil;
 
 public class EntityDamage implements Listener{
@@ -29,6 +26,9 @@ public class EntityDamage implements Listener{
 
 		Class<Object> damagerclazz = VerifyUtil.getMobClass(damager);
 		if (damagerclazz != null) {
+			CustomMob mob = (CustomMob) damager;
+			mob.onHit(event);
+			/*
 			try {
 				//@SuppressWarnings("unchecked")
 				//Class<Object> instance = (Class<Object>) damagerclazz.newInstance();
@@ -41,12 +41,16 @@ public class EntityDamage implements Listener{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+			*/
 		} else if (damager instanceof Player) {
 
 		}
 
 		Class<Object> victimclazz = VerifyUtil.getMobClass(victim);
 		if (victimclazz != null) {
+			CustomMob mob = (CustomMob) victim;
+			mob.onGetHit(event);
+			/*
 			try {
 				Method method = victimclazz.getMethod(ongethitmethodName, EntityDamageByEntityEvent.class);
 				method.invoke(victimclazz, event);
@@ -57,6 +61,7 @@ public class EntityDamage implements Listener{
 				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
+			*/
 		} else if (victim instanceof Player) {
 
 		}
@@ -67,6 +72,9 @@ public class EntityDamage implements Listener{
 		Entity victim = event.getEntity();
 		Class<Object> victimclazz = VerifyUtil.getMobClass(victim);
 		if (victimclazz != null) {
+			CustomMob mob = (CustomMob) victim;
+			mob.onDamage(event);
+			/*
 			try {
 				Method method = victimclazz.getMethod(ondamagedmethodName, EntityDamageEvent.class);
 				method.invoke(victimclazz, event);
@@ -76,6 +84,7 @@ public class EntityDamage implements Listener{
 				e.printStackTrace();
 				Bukkit.broadcastMessage(e.getCause().toString());
 			}
+			*/
 		} else if (victim instanceof Player) {
 
 		}
@@ -86,6 +95,9 @@ public class EntityDamage implements Listener{
 		Entity victim = event.getEntity();
 		Class<Object> victimclazz = VerifyUtil.getMobClass(victim);
 		if (victimclazz != null) {
+			CustomMob mob = (CustomMob) victim;
+			mob.onDeath(event);
+			/*
 			try {
 				Method method = victimclazz.getMethod(ondeathmethodName, EntityDeathEvent.class);
 				method.invoke(victimclazz, event);
@@ -95,6 +107,7 @@ public class EntityDamage implements Listener{
 				e.printStackTrace();
 				Bukkit.broadcastMessage(e.getCause().toString());
 			}
+			*/
 		} else if (victim instanceof Player) {
 
 		}

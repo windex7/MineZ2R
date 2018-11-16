@@ -23,19 +23,19 @@ import util.RandomUtil;
 import util.StuckUtil;
 import util.VerifyUtil;
 
-public class ShinyToe extends GeneralZombie {
+public class ShinyToe extends GeneralZombie implements CustomMob {
 	private static String mobkey = "shinytoe";
 	private static double tppos = 0.6;
 
-	public static String getKey() {
+	public String getKey() {
 		return mobkey;
 	}
 
-	public static void onHit(EntityDamageByEntityEvent event) {
+	public void onHit(EntityDamageByEntityEvent event) {
 		Bukkit.broadcastMessage("shiny toe attacked!!");
 	}
 
-	public static void onGetHit(EntityDamageByEntityEvent event) {
+	public void onGetHit(EntityDamageByEntityEvent event) {
 		/*DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -55,7 +55,7 @@ public class ShinyToe extends GeneralZombie {
 		}
 	}
 
-	public static void onDamage(EntityDamageEvent event) {
+	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -63,7 +63,7 @@ public class ShinyToe extends GeneralZombie {
 		}
 	}
 
-	public static void onDeath(EntityDeathEvent event) {
+	public void onDeath(EntityDeathEvent event) {
 
 	}
 

@@ -17,22 +17,22 @@ import net.minecraft.server.v1_9_R2.GroupDataEntity;
 import util.NMSUtil;
 import util.VerifyUtil;
 
-public class RevenantReborn extends GeneralZombie {
+public class RevenantReborn extends GeneralZombie implements CustomMob {
 	private static String mobkey = "revenantreborn";
 
-	public static String getKey() {
+	public String getKey() {
 		return mobkey;
 	}
 
-	public static void onHit(EntityDamageByEntityEvent event) {
+	public void onHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public static void onGetHit(EntityDamageByEntityEvent event) {
+	public void onGetHit(EntityDamageByEntityEvent event) {
 
 	}
 
-	public static void onDamage(EntityDamageEvent event) {
+	public void onDamage(EntityDamageEvent event) {
 		DamageCause cause = event.getCause();
 		if (ignore_damagecause.contains(cause)) {
 			event.setCancelled(true);
@@ -40,7 +40,7 @@ public class RevenantReborn extends GeneralZombie {
 		}
 	}
 
-	public static void onDeath(EntityDeathEvent event) {
+	public void onDeath(EntityDeathEvent event) {
 
 	}
 

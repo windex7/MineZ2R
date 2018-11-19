@@ -1,9 +1,5 @@
 package customrecipe.repair;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,7 +7,8 @@ import util.StatsUtil;
 import util.StatsUtil.Stat;
 
 public class RepairRecipe {
-	private static Map<Material, Material> repairables = new HashMap<Material, Material>() {
+	/*
+	private static Multimap<Material, Material, Integer> repairables = HashMultimap.create() {
 		{
 			put(Material.WOOD_SWORD, Material.WOOD);
 			put(Material.WOOD_AXE, Material.WOOD);
@@ -21,6 +18,7 @@ public class RepairRecipe {
 			put(Material.STONE_SWORD, Material.STONE);
 		}
 	};
+	*/
 
 	public static ItemStack onRepair(ItemStack[] is, Player player) {
 		return is[0];

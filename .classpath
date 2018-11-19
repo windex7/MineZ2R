@@ -24,5 +24,6 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Projects/MineZ2R/libs/guava-27.0-jre.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

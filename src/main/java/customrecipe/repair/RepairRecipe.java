@@ -13,9 +13,13 @@ public abstract class RepairRecipe {
 
 	public static double getRepairMultiplier(Player player) {
 		//double defpercent = 0.98;
+		/*
 		double[] percent = {0.98, 1.0, 1.02, 1.04, 1.06, 1.08, 1.1};
 		int proflv = StatsUtil.getProf(player, Stat.repair);
 
 		return percent[proflv];
+		*/
+
+		return StatsUtil.getProfCorrectionValue(player, Stat.repair);
 	}
 }

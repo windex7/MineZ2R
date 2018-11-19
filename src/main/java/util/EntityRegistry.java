@@ -4,6 +4,9 @@ import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import net.minecraft.server.v1_9_R2.Entity;
 import net.minecraft.server.v1_9_R2.EntityTypes;
@@ -30,6 +33,14 @@ public enum EntityRegistry {
 	public static void spawnEntity(Entity entity, Location loc) {
 		entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 		((CraftWorld)loc.getWorld()).getHandle().addEntity(entity);
+	}
+
+	public static void spawnInvulEntity(Entity entity, Location loc, int invultick) {
+		entity.setLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
+		((CraftWorld)loc.getWorld()).getHandle().addEntity(entity);
+		org.bukkit.entity.LivingEntity bukkitentity = (LivingEntity) entity.getBukkitEntity();
+		//bukkitentity.setNoDamageTicks(invultick * 2);
+		bukkitentity.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, invultick, 5), true);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -23,4 +23,20 @@ public class SpawnMobUtil {
 			return false;
 		}
 	}
+
+	public static boolean spawnCustomInvulMob(String mobName, Location loc, int invultick) {
+		if (ReflectionUtil.getMobSet().contains(mobName)) {
+			try {
+				EntityRegistry.spawnInvulEntity((Entity)(ReflectionUtil.getMobConstructor(mobName, World.class).newInstance(loc.getWorld())), loc, invultick);
+				return true;
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
 }

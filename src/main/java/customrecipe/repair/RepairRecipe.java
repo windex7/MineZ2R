@@ -80,10 +80,62 @@ public class RepairRecipe {
 		}
 	};
 
-	public static ItemStack onRepair(ItemStack[] is, Player player) {
-		return is[0];
+	private static List<Material> repairablematerial = new ArrayList<Material>();
+
+	static {
+		for (RepairRecipe recipe : repairables) {
+			repairablematerial.add(recipe.result);
+		}
 	}
 
+	public static boolean isRepairable(ItemStack is) {
+		// if (nbt of is IS repairable)
+		return repairablematerial.contains(is.getType());
+	}
+
+	public static boolean isBreakdownable(ItemStack is) {
+		// if (nbt of is IS breakdownable)
+		return repairablematerial.contains(is.getType());
+	}
+
+	public static ItemStack onRepair(ItemStack tool, ItemStack ingr, Player player) {
+		double originaldura = tool.getDurability();
+
+		double baserepairdura = 0;
+		if (isRepairable(tool)) {
+			for (RepairRecipe recipe : repairables) {
+				if (recipe.result.equals(tool.getType()) && recipe.ingredient.equals(ingr.getType())) {
+					baserepairdura = recipe.durability;
+				}
+			}
+		}
+
+		double playerprof = getRepairMultiplier(player);
+
+		double duraresult = originaldura - (baserepairdura * playerprof);
+		if (duraresult < 0) duraresult = 0;
+
+		ItemStack result = tool.clone();
+		result.setDurability((short) duraresult);
+
+		return result;
+	}
+
+	public static int onBreakdown(ItemStack tool) {
+		double dura = tool.getDurability();
+		double maxdura = tool.getType().getMaxDurability();
+		double duraratio = dura / maxdura;
+		if (isBreakdownable(tool)) {
+			for (RepairRecipe recipe : repairables) {
+				if (recipe.result.equals(tool.getType())) {
+					double maxscrap = recipe.maxscrapnum;
+					double result = maxscrap * duraratio;
+					return (int) result;
+				}
+			}
+		}
+		return 0;
+	}
 
 	public static double getRepairMultiplier(Player player) {
 		//double defpercent = 0.98;
